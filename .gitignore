@@ -1,0 +1,18 @@
+# Visual Studio .vs folder
+.vs/
+**/.vs/
+.vs/**
+
+# Visual Studio 임시 파일 및 캐시
+.vs/
+[Bb]in/
+[Oo]bj/
+out/
+
+# 빌드 결과물
+*.exe
+*.pdb
+*.user
+
+# 기타 라이브러리 캐시
+.vsconfig
