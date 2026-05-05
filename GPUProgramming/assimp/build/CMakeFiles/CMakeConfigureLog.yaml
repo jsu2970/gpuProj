@@ -1,0 +1,1707 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "CMakeLists.txt:88 (find_program)"
+    mode: "program"
+    variable: "CCACHE_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ccache"
+    candidate_directories:
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Windows/System32/ccache.com"
+      - "C:/Windows/System32/ccache.exe"
+      - "C:/Windows/System32/ccache"
+      - "C:/Windows/ccache.com"
+      - "C:/Windows/ccache.exe"
+      - "C:/Windows/ccache"
+      - "C:/Windows/System32/wbem/ccache.com"
+      - "C:/Windows/System32/wbem/ccache.exe"
+      - "C:/Windows/System32/wbem/ccache"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/ccache.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/ccache.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/ccache"
+      - "C:/Windows/System32/OpenSSH/ccache.com"
+      - "C:/Windows/System32/OpenSSH/ccache.exe"
+      - "C:/Windows/System32/OpenSSH/ccache"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/ccache.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/ccache.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/ccache"
+      - "C:/Program Files/Bandizip/ccache.com"
+      - "C:/Program Files/Bandizip/ccache.exe"
+      - "C:/Program Files/Bandizip/ccache"
+      - "C:/Program Files/dotnet/ccache.com"
+      - "C:/Program Files/dotnet/ccache.exe"
+      - "C:/Program Files/dotnet/ccache"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/ccache.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/ccache.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/ccache"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/ccache.com"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/ccache.exe"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/ccache"
+      - "C:/Program Files/cursor/resources/app/bin/ccache.com"
+      - "C:/Program Files/cursor/resources/app/bin/ccache.exe"
+      - "C:/Program Files/cursor/resources/app/bin/ccache"
+      - "C:/Program Files/CMake/bin/ccache.com"
+      - "C:/Program Files/CMake/bin/ccache.exe"
+      - "C:/Program Files/CMake/bin/ccache"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/ccache.com"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/ccache.exe"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/ccache"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/ccache"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/ccache"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/ccache.com"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/ccache.exe"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/ccache"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/ccache.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/ccache.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/ccache"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCCompilerId.c.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeCCompilerId.c.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:122 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+      鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:54
+      
+      1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdC\\CompilerIdC.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+      PrepareForBuild:
+        "Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+        "Debug\\CompilerIdC.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+      InitializeBuildStatus:
+        "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"Debug\\CompilerIdC.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+        "Debug\\CompilerIdC.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+        "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+      "C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdC\\CompilerIdC.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+      
+      鍮뚮뱶?덉뒿?덈떎.
+          寃쎄퀬 0媛?
+          ?ㅻ쪟 0媛?
+      
+      寃쎄낵 ?쒓컙: 00:00:00.53
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/workspace/assimp/build/CMakeFiles/4.2.3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:103 (__resolve_linker_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "link"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.com"
+    found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:104 (__resolve_linker_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "lld-link"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.com"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.exe"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link"
+      - "C:/Windows/System32/lld-link.com"
+      - "C:/Windows/System32/lld-link.exe"
+      - "C:/Windows/System32/lld-link"
+      - "C:/Windows/lld-link.com"
+      - "C:/Windows/lld-link.exe"
+      - "C:/Windows/lld-link"
+      - "C:/Windows/System32/wbem/lld-link.com"
+      - "C:/Windows/System32/wbem/lld-link.exe"
+      - "C:/Windows/System32/wbem/lld-link"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link"
+      - "C:/Windows/System32/OpenSSH/lld-link.com"
+      - "C:/Windows/System32/OpenSSH/lld-link.exe"
+      - "C:/Windows/System32/OpenSSH/lld-link"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link"
+      - "C:/Program Files/Bandizip/lld-link.com"
+      - "C:/Program Files/Bandizip/lld-link.exe"
+      - "C:/Program Files/Bandizip/lld-link"
+      - "C:/Program Files/dotnet/lld-link.com"
+      - "C:/Program Files/dotnet/lld-link.exe"
+      - "C:/Program Files/dotnet/lld-link"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link.com"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link.exe"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link.com"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link.exe"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link"
+      - "C:/Program Files/CMake/bin/lld-link.com"
+      - "C:/Program Files/CMake/bin/lld-link.exe"
+      - "C:/Program Files/CMake/bin/lld-link"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.com"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.exe"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link.com"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link.exe"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "link"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.com"
+    found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/link.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_MT"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "mt"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt.com"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt.exe"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/mt"
+      - "C:/Windows/System32/mt.com"
+      - "C:/Windows/System32/mt.exe"
+      - "C:/Windows/System32/mt"
+      - "C:/Windows/mt.com"
+      - "C:/Windows/mt.exe"
+      - "C:/Windows/mt"
+      - "C:/Windows/System32/wbem/mt.com"
+      - "C:/Windows/System32/wbem/mt.exe"
+      - "C:/Windows/System32/wbem/mt"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/mt"
+      - "C:/Windows/System32/OpenSSH/mt.com"
+      - "C:/Windows/System32/OpenSSH/mt.exe"
+      - "C:/Windows/System32/OpenSSH/mt"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/mt"
+      - "C:/Program Files/Bandizip/mt.com"
+      - "C:/Program Files/Bandizip/mt.exe"
+      - "C:/Program Files/Bandizip/mt"
+      - "C:/Program Files/dotnet/mt.com"
+      - "C:/Program Files/dotnet/mt.exe"
+      - "C:/Program Files/dotnet/mt"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/mt.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/mt.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/mt"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/mt.com"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/mt.exe"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/mt"
+      - "C:/Program Files/cursor/resources/app/bin/mt.com"
+      - "C:/Program Files/cursor/resources/app/bin/mt.exe"
+      - "C:/Program Files/cursor/resources/app/bin/mt"
+      - "C:/Program Files/CMake/bin/mt.com"
+      - "C:/Program Files/CMake/bin/mt.exe"
+      - "C:/Program Files/CMake/bin/mt"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt.com"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt.exe"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/mt"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/mt"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/mt.com"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/mt"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/mt.com"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/mt.exe"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/mt"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/mt.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/mt.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/mt"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:243 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCCompiler.cmake:200 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "lib"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lib.com"
+    found: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lib.exe"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:462 (find_file)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:500 (CMAKE_DETERMINE_COMPILER_ID_WRITE)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:8 (CMAKE_DETERMINE_COMPILER_ID_BUILD)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "file"
+    variable: "src_in"
+    description: "Path to a file."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "CMakeCXXCompilerId.cpp.in"
+    candidate_directories:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/"
+    found: "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeCXXCompilerId.cpp.in"
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+      鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:54
+      
+      1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+      PrepareForBuild:
+        "Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+        "Debug\\CompilerIdCXX.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+      InitializeBuildStatus:
+        "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+        "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+        "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+      "C:\\workspace\\assimp\\build\\CMakeFiles\\4.2.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+      
+      鍮뚮뱶?덉뒿?덈떎.
+          寃쎄퀬 0媛?
+          ?ㅻ쪟 0媛?
+      
+      寃쎄낵 ?쒓컙: 00:00:00.36
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/workspace/assimp/build/CMakeFiles/4.2.3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:37 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:65 (__resolve_tool_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeFindBinUtils.cmake:104 (__resolve_linker_path)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCXXCompiler.cmake:206 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "_CMAKE_TOOL_WITH_PATH"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "lld-link"
+    candidate_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/"
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+    searched_directories:
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.com"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link.exe"
+      - "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/lld-link"
+      - "C:/Windows/System32/lld-link.com"
+      - "C:/Windows/System32/lld-link.exe"
+      - "C:/Windows/System32/lld-link"
+      - "C:/Windows/lld-link.com"
+      - "C:/Windows/lld-link.exe"
+      - "C:/Windows/lld-link"
+      - "C:/Windows/System32/wbem/lld-link.com"
+      - "C:/Windows/System32/wbem/lld-link.exe"
+      - "C:/Windows/System32/wbem/lld-link"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/lld-link"
+      - "C:/Windows/System32/OpenSSH/lld-link.com"
+      - "C:/Windows/System32/OpenSSH/lld-link.exe"
+      - "C:/Windows/System32/OpenSSH/lld-link"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/lld-link"
+      - "C:/Program Files/Bandizip/lld-link.com"
+      - "C:/Program Files/Bandizip/lld-link.exe"
+      - "C:/Program Files/Bandizip/lld-link"
+      - "C:/Program Files/dotnet/lld-link.com"
+      - "C:/Program Files/dotnet/lld-link.exe"
+      - "C:/Program Files/dotnet/lld-link"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/lld-link"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link.com"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link.exe"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/lld-link"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link.com"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link.exe"
+      - "C:/Program Files/cursor/resources/app/bin/lld-link"
+      - "C:/Program Files/CMake/bin/lld-link.com"
+      - "C:/Program Files/CMake/bin/lld-link.exe"
+      - "C:/Program Files/CMake/bin/lld-link"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.com"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link.exe"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/lld-link"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/lld-link"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link.com"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link.exe"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/lld-link"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/lld-link"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineRCCompiler.cmake:40 (find_program)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-MSVC.cmake:580 (enable_language)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-MSVC.cmake:553 (__windows_compiler_msvc_enable_rc)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Platform/Windows-MSVC-C.cmake:5 (__windows_compiler_msvc)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeCInformation.cmake:48 (include)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    mode: "program"
+    variable: "CMAKE_RC_COMPILER"
+    description: "RC compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "rc"
+    candidate_directories:
+      - "C:/Windows/System32/"
+      - "C:/Windows/"
+      - "C:/Windows/System32/wbem/"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/"
+      - "C:/Windows/System32/OpenSSH/"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "C:/Program Files/Bandizip/"
+      - "C:/Program Files/dotnet/"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/"
+      - "C:/Program Files/cursor/resources/app/bin/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/"
+      - "C:/Program Files/bin/"
+      - "C:/Program Files/sbin/"
+      - "C:/Program Files/"
+      - "C:/Program Files (x86)/bin/"
+      - "C:/Program Files (x86)/sbin/"
+      - "C:/Program Files (x86)/"
+      - "C:/Program Files/CMake/bin/"
+      - "C:/Program Files/CMake/sbin/"
+      - "C:/Program Files/CMake/"
+      - "C:/Program Files (x86)/Assimp/bin/"
+      - "C:/Program Files (x86)/Assimp/sbin/"
+      - "C:/Program Files (x86)/Assimp/"
+    searched_directories:
+      - "C:/Windows/System32/rc.com"
+      - "C:/Windows/System32/rc.exe"
+      - "C:/Windows/System32/rc"
+      - "C:/Windows/rc.com"
+      - "C:/Windows/rc.exe"
+      - "C:/Windows/rc"
+      - "C:/Windows/System32/wbem/rc.com"
+      - "C:/Windows/System32/wbem/rc.exe"
+      - "C:/Windows/System32/wbem/rc"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc.com"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc.exe"
+      - "C:/Windows/System32/WindowsPowerShell/v1.0/rc"
+      - "C:/Windows/System32/OpenSSH/rc.com"
+      - "C:/Windows/System32/OpenSSH/rc.exe"
+      - "C:/Windows/System32/OpenSSH/rc"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc.com"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc.exe"
+      - "C:/Program Files (x86)/NVIDIA Corporation/PhysX/Common/rc"
+      - "C:/Program Files/Bandizip/rc.com"
+      - "C:/Program Files/Bandizip/rc.exe"
+      - "C:/Program Files/Bandizip/rc"
+      - "C:/Program Files/dotnet/rc.com"
+      - "C:/Program Files/dotnet/rc.exe"
+      - "C:/Program Files/dotnet/rc"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/rc.com"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/rc.exe"
+      - "C:/Program Files/NVIDIA Corporation/NVIDIA NvDLISR/rc"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/rc.com"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/rc.exe"
+      - "C:/Users/jsu29/.jdks/corretto-17.0.17/bin/rc"
+      - "C:/Program Files/cursor/resources/app/bin/rc.com"
+      - "C:/Program Files/cursor/resources/app/bin/rc.exe"
+      - "C:/Program Files/cursor/resources/app/bin/rc"
+      - "C:/Program Files/CMake/bin/rc.com"
+      - "C:/Program Files/CMake/bin/rc.exe"
+      - "C:/Program Files/CMake/bin/rc"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc.com"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc.exe"
+      - "C:/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/Scripts/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python39/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/Scripts/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Python313/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Python/Launcher/rc"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Microsoft/WindowsApps/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/Microsoft VS Code/bin/rc"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/rc.com"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/GitHubDesktop/bin/rc"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/rc.com"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/rc.exe"
+      - "C:/Program Files/JetBrains/IntelliJ IDEA 2025.3.2/bin/rc"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/rc.com"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/rc.exe"
+      - "C:/Users/jsu29/AppData/Local/Programs/cursor/resources/app/bin/rc"
+      - "C:/Program Files/bin/rc.com"
+      - "C:/Program Files/bin/rc.exe"
+      - "C:/Program Files/bin/rc"
+      - "C:/Program Files/sbin/rc.com"
+      - "C:/Program Files/sbin/rc.exe"
+      - "C:/Program Files/sbin/rc"
+      - "C:/Program Files/rc.com"
+      - "C:/Program Files/rc.exe"
+      - "C:/Program Files/rc"
+      - "C:/Program Files (x86)/bin/rc.com"
+      - "C:/Program Files (x86)/bin/rc.exe"
+      - "C:/Program Files (x86)/bin/rc"
+      - "C:/Program Files (x86)/sbin/rc.com"
+      - "C:/Program Files (x86)/sbin/rc.exe"
+      - "C:/Program Files (x86)/sbin/rc"
+      - "C:/Program Files (x86)/rc.com"
+      - "C:/Program Files (x86)/rc.exe"
+      - "C:/Program Files (x86)/rc"
+      - "C:/Program Files/CMake/bin/rc.com"
+      - "C:/Program Files/CMake/bin/rc.exe"
+      - "C:/Program Files/CMake/bin/rc"
+      - "C:/Program Files/CMake/sbin/rc.com"
+      - "C:/Program Files/CMake/sbin/rc.exe"
+      - "C:/Program Files/CMake/sbin/rc"
+      - "C:/Program Files/CMake/rc.com"
+      - "C:/Program Files/CMake/rc.exe"
+      - "C:/Program Files/CMake/rc"
+      - "C:/Program Files (x86)/Assimp/bin/rc.com"
+      - "C:/Program Files (x86)/Assimp/bin/rc.exe"
+      - "C:/Program Files (x86)/Assimp/bin/rc"
+      - "C:/Program Files (x86)/Assimp/sbin/rc.com"
+      - "C:/Program Files (x86)/Assimp/sbin/rc.exe"
+      - "C:/Program Files (x86)/Assimp/sbin/rc"
+      - "C:/Program Files (x86)/Assimp/rc.com"
+      - "C:/Program Files (x86)/Assimp/rc.exe"
+      - "C:/Program Files (x86)/Assimp/rc"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "C:\\Windows\\system32"
+        - "C:\\Windows"
+        - "C:\\Windows\\System32\\Wbem"
+        - "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\"
+        - "C:\\Windows\\System32\\OpenSSH\\"
+        - "C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common"
+        - "C:\\Program Files\\Bandizip\\"
+        - "C:\\Program Files\\dotnet\\"
+        - "C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR"
+        - "C:\\Users\\jsu29\\.jdks\\corretto-17.0.17\\bin\\"
+        - "C:\\Program Files\\cursor\\resources\\app\\bin"
+        - "C:\\Program Files\\CMake\\bin"
+        - "C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python39\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\Scripts\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Python313\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Python\\Launcher\\"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Microsoft\\WindowsApps"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\Microsoft VS Code\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\GitHubDesktop\\bin"
+        - "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2025.3.2\\bin"
+        - "C:\\Users\\jsu29\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin"
+      CMAKE_INSTALL_PREFIX: "C:/Program Files (x86)/Assimp"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "C:/Program Files"
+        - "C:/Program Files (x86)"
+        - "C:/Program Files/CMake"
+        - "C:/Program Files (x86)/Assimp"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-fr51pf"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-fr51pf"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-fr51pf'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_67aba.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:55
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fr51pf\\cmTC_67aba.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fr51pf\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_67aba.dir\\Debug\\cmTC_67aba.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_67aba.dir\\Debug\\cmTC_67aba.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_67aba.dir\\Debug\\cmTC_67aba.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_67aba.dir\\Debug\\\\" /Fd"cmTC_67aba.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_67aba.dir\\Debug\\\\" /Fd"cmTC_67aba.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCCompilerABI.c"
+          CMakeCCompilerABI.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fr51pf\\Debug\\cmTC_67aba.exe" /INCREMENTAL /ILK:"cmTC_67aba.dir\\Debug\\cmTC_67aba.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-fr51pf/Debug/cmTC_67aba.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-fr51pf/Debug/cmTC_67aba.lib" /MACHINE:X64  /machine:x64 cmTC_67aba.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_67aba.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fr51pf\\Debug\\cmTC_67aba.exe
+        FinalizeBuildStatus:
+          "cmTC_67aba.dir\\Debug\\cmTC_67aba.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+          "cmTC_67aba.dir\\Debug\\cmTC_67aba.tlog\\cmTC_67aba.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-fr51pf\\cmTC_67aba.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+        
+        鍮뚮뱶?덉뒿?덈떎.
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 0媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.34
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35223.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-y3ny87"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-y3ny87"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-y3ny87'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_62f15.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:56
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-y3ny87\\cmTC_62f15.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-y3ny87\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_62f15.dir\\Debug\\cmTC_62f15.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_62f15.dir\\Debug\\cmTC_62f15.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_62f15.dir\\Debug\\cmTC_62f15.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /Fo"cmTC_62f15.dir\\Debug\\\\" /Fd"cmTC_62f15.dir\\Debug\\vc143.pdb" /external:W1 /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /Fo"cmTC_62f15.dir\\Debug\\\\" /Fd"cmTC_62f15.dir\\Debug\\vc143.pdb" /external:W1 /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.2\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-y3ny87\\Debug\\cmTC_62f15.exe" /INCREMENTAL /ILK:"cmTC_62f15.dir\\Debug\\cmTC_62f15.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-y3ny87/Debug/cmTC_62f15.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-y3ny87/Debug/cmTC_62f15.lib" /MACHINE:X64  /machine:x64 cmTC_62f15.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_62f15.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-y3ny87\\Debug\\cmTC_62f15.exe
+        FinalizeBuildStatus:
+          "cmTC_62f15.dir\\Debug\\cmTC_62f15.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+          "cmTC_62f15.dir\\Debug\\cmTC_62f15.tlog\\cmTC_62f15.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-y3ny87\\cmTC_62f15.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+        
+        鍮뚮뱶?덉뒿?덈떎.
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 0媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.35
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:253 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/Internal/CMakeDetermineLinkerId.cmake:38 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeDetermineCompilerABI.cmake:299 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:107 (PROJECT)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35223.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFile.cmake:174 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:35 (check_include_file)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-n0eu3q"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-n0eu3q"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-n0eu3q'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1dae5.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:56
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\cmTC_1dae5.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_1dae5.dir\\Debug\\cmTC_1dae5.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_1dae5.dir\\Debug\\cmTC_1dae5.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_1dae5.dir\\Debug\\cmTC_1dae5.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_1dae5.dir\\Debug\\\\" /Fd"cmTC_1dae5.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_1dae5.dir\\Debug\\\\" /Fd"cmTC_1dae5.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\Debug\\cmTC_1dae5.exe" /INCREMENTAL /ILK:"cmTC_1dae5.dir\\Debug\\cmTC_1dae5.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-n0eu3q/Debug/cmTC_1dae5.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-n0eu3q/Debug/cmTC_1dae5.lib" /MACHINE:X64  /machine:x64 cmTC_1dae5.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_1dae5.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\Debug\\cmTC_1dae5.exe
+        FinalizeBuildStatus:
+          "cmTC_1dae5.dir\\Debug\\cmTC_1dae5.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+          "cmTC_1dae5.dir\\Debug\\cmTC_1dae5.tlog\\cmTC_1dae5.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-n0eu3q\\cmTC_1dae5.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+        
+        鍮뚮뱶?덉뒿?덈떎.
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 0媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.35
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFile.cmake:174 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:36 (check_include_file)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-rl4a8c"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-rl4a8c"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-rl4a8c'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d63fd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:57
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\cmTC_d63fd.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_d63fd.dir\\Debug\\cmTC_d63fd.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_d63fd.dir\\Debug\\cmTC_d63fd.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_d63fd.dir\\Debug\\cmTC_d63fd.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_d63fd.dir\\Debug\\\\" /Fd"cmTC_d63fd.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_d63fd.dir\\Debug\\\\" /Fd"cmTC_d63fd.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\Debug\\cmTC_d63fd.exe" /INCREMENTAL /ILK:"cmTC_d63fd.dir\\Debug\\cmTC_d63fd.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-rl4a8c/Debug/cmTC_d63fd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-rl4a8c/Debug/cmTC_d63fd.lib" /MACHINE:X64  /machine:x64 cmTC_d63fd.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_d63fd.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\Debug\\cmTC_d63fd.exe
+        FinalizeBuildStatus:
+          "cmTC_d63fd.dir\\Debug\\cmTC_d63fd.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+          "cmTC_d63fd.dir\\Debug\\cmTC_d63fd.tlog\\cmTC_d63fd.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-rl4a8c\\cmTC_d63fd.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+        
+        鍮뚮뱶?덉뒿?덈떎.
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 0媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.34
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFile.cmake:174 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:37 (check_include_file)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-8ldor8"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-8ldor8"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-8ldor8'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_513d9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:57
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\cmTC_513d9.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_513d9.dir\\Debug\\cmTC_513d9.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_513d9.dir\\Debug\\cmTC_513d9.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_513d9.dir\\Debug\\cmTC_513d9.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_513d9.dir\\Debug\\\\" /Fd"cmTC_513d9.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_513d9.dir\\Debug\\\\" /Fd"cmTC_513d9.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\Debug\\cmTC_513d9.exe" /INCREMENTAL /ILK:"cmTC_513d9.dir\\Debug\\cmTC_513d9.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-8ldor8/Debug/cmTC_513d9.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-8ldor8/Debug/cmTC_513d9.lib" /MACHINE:X64  /machine:x64 cmTC_513d9.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_513d9.vcxproj -> C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\Debug\\cmTC_513d9.exe
+        FinalizeBuildStatus:
+          "cmTC_513d9.dir\\Debug\\cmTC_513d9.tlog\\unsuccessfulbuild" ?뚯씪????젣?섍퀬 ?덉뒿?덈떎.
+          "cmTC_513d9.dir\\Debug\\cmTC_513d9.tlog\\cmTC_513d9.lastbuildstate"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-8ldor8\\cmTC_513d9.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??.
+        
+        鍮뚮뱶?덉뒿?덈떎.
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 0媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.34
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckTypeSize.cmake:348 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckTypeSize.cmake:481 (__check_type_size_impl)"
+      - "contrib/zlib/CMakeLists.txt:55 (check_type_size)"
+    checks:
+      - "Check size of off64_t"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-cxhogv"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-cxhogv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "HAVE_OFF64_T"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-cxhogv'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_7531a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:58
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_7531a.dir\\Debug\\cmTC_7531a.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_7531a.dir\\Debug\\cmTC_7531a.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_7531a.dir\\Debug\\cmTC_7531a.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_7531a.dir\\Debug\\\\" /Fd"cmTC_7531a.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_7531a.dir\\Debug\\\\" /Fd"cmTC_7531a.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c"
+          OFF64_T.c
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(29,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(30,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(31,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(32,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(33,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??. - ?ㅽ뙣
+        
+        鍮뚮뱶?섏? 紐삵뻽?듬땲??
+        
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj"(湲곕낯 ?\xc2\x80??(1)->
+        (ClCompile ?\xc2\x80?? -> 
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(29,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(30,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(31,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(32,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\OFF64_T.c(33,12): error C2065: 'off64_t': ?좎뼵?섏? ?딆? ?앸퀎?먯엯?덈떎. [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-cxhogv\\cmTC_7531a.vcxproj]
+        
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 5媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.21
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckFunctionExists.cmake:167 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:64 (check_function_exists)"
+    checks:
+      - "Looking for fseeko"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-qtpanl"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-qtpanl"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "HAVE_FSEEKO"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-qtpanl'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_151fc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:58
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_151fc.dir\\Debug\\cmTC_151fc.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_151fc.dir\\Debug\\cmTC_151fc.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_151fc.dir\\Debug\\cmTC_151fc.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_151fc.dir\\Debug\\\\" /Fd"cmTC_151fc.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_151fc.dir\\Debug\\\\" /Fd"cmTC_151fc.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\Debug\\cmTC_151fc.exe" /INCREMENTAL /ILK:"cmTC_151fc.dir\\Debug\\cmTC_151fc.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-qtpanl/Debug/cmTC_151fc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-qtpanl/Debug/cmTC_151fc.lib" /MACHINE:X64  /machine:x64 cmTC_151fc.dir\\Debug\\CheckFunctionExists.obj
+        CheckFunctionExists.obj : error LNK2019: fseekomain ?⑥닔?먯꽌 李몄“?섎뒗 ?뺤씤?????녿뒗 ?몃? 湲고샇 [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj]
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\Debug\\cmTC_151fc.exe : fatal error LNK1120: 1媛쒖쓽 ?뺤씤?????녿뒗 ?몃? 李몄“?낅땲?? [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj]
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??. - ?ㅽ뙣
+        
+        鍮뚮뱶?섏? 紐삵뻽?듬땲??
+        
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj"(湲곕낯 ?\xc2\x80??(1)->
+        (Link ?\xc2\x80?? -> 
+          CheckFunctionExists.obj : error LNK2019: fseekomain ?⑥닔?먯꽌 李몄“?섎뒗 ?뺤씤?????녿뒗 ?몃? 湲고샇 [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj]
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\Debug\\cmTC_151fc.exe : fatal error LNK1120: 1媛쒖쓽 ?뺤씤?????녿뒗 ?몃? 李몄“?낅땲?? [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-qtpanl\\cmTC_151fc.vcxproj]
+        
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 2媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.31
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.2/Modules/CheckIncludeFile.cmake:174 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:72 (check_include_file)"
+    checks:
+      - "Looking for unistd.h"
+    directories:
+      source: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-934jki"
+      binary: "C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-934jki"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/jsu29/\ubc14\ud0d5 \ud654\uba74/4\ud559\ub144 1\ud559\uae30/gpu/Week6/assimp-6.0.4/cmake-modules"
+    buildResult:
+      variable: "Z_HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/workspace/assimp/build/CMakeFiles/CMakeScratch/TryCompile-934jki'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8b197.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        msbuild 踰꾩쟾 17.14.40+3e7442088(.NET Framework??
+        鍮뚮뱶 ?쒖옉: 2026-04-09 ?ㅽ썑 1:12:59
+        
+        1 ?몃뱶??"C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\cmTC_8b197.vcxproj" ?꾨줈?앺듃(湲곕낯 ?\xc2\x80???낅땲??
+        PrepareForBuild:
+          援ъ“??異쒕젰???ъ슜?????덉뒿?덈떎. 而댄뙆?쇰윭 吏꾨떒???쒖떇?\xc2\x80 ?ㅻ쪟 怨꾩링 援ъ“瑜?諛섏쁺?⑸땲?? ?먯꽭???댁슜?\xc2\x80 https://aka.ms/cpp/structured-output??李몄“?섏꽭??
+          "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\Debug\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_8b197.dir\\Debug\\cmTC_8b197.tlog\\" ?붾젆?곕━瑜?留뚮뱾怨??덉뒿?덈떎.
+        InitializeBuildStatus:
+          "AlwaysCreate"??媛\xc2\x80) 吏\xc2\x80?뺣릺?덇린 ?뚮Ц??"cmTC_8b197.dir\\Debug\\cmTC_8b197.tlog\\unsuccessfulbuild"??瑜? 留뚮뱾怨??덉뒿?덈떎.
+          "cmTC_8b197.dir\\Debug\\cmTC_8b197.tlog\\unsuccessfulbuild"???곌껐(touching)?섍퀬 ?덉뒿?덈떎.
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_8b197.dir\\Debug\\\\" /Fd"cmTC_8b197.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ 理쒖쟻??而댄뙆?쇰윭 踰꾩쟾 19.44.35223(x64)
+          Copyright (c) Microsoft Corporation. All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _MBCS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /Fo"cmTC_8b197.dir\\Debug\\\\" /Fd"cmTC_8b197.dir\\Debug\\vc143.pdb" /external:W1 /TC /errorReport:queue "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\CheckIncludeFile.c(1,10): error C1083: ?ы븿 ?뚯씪???????놁뒿?덈떎. 'unistd.h': No such file or directory [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\cmTC_8b197.vcxproj]
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\cmTC_8b197.vcxproj" ?꾨줈?앺듃瑜?鍮뚮뱶?덉뒿?덈떎(湲곕낯 ?\xc2\x80??. - ?ㅽ뙣
+        
+        鍮뚮뱶?섏? 紐삵뻽?듬땲??
+        
+        "C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\cmTC_8b197.vcxproj"(湲곕낯 ?\xc2\x80??(1)->
+        (ClCompile ?\xc2\x80?? -> 
+          C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\CheckIncludeFile.c(1,10): error C1083: ?ы븿 ?뚯씪???????놁뒿?덈떎. 'unistd.h': No such file or directory [C:\\workspace\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-934jki\\cmTC_8b197.vcxproj]
+        
+            寃쎄퀬 0媛?
+            ?ㅻ쪟 1媛?
+        
+        寃쎄낵 ?쒓컙: 00:00:00.21
+        
+      exitCode: 1
+...

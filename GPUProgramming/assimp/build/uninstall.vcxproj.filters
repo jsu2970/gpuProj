@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\workspace\assimp\build\CMakeFiles\0a899b4d114d7a014a9ce216587ad191\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\jsu29\바탕 화면\4학년 1학기\gpu\Week6\assimp-6.0.4\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\workspace\assimp\build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{57071942-BF17-3FCB-96BA-03E023BEBB70}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

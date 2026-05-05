@@ -1,0 +1,17 @@
+﻿  Building Custom Rule C:/Users/jsu29/바탕 화면/4학년 1학기/gpu/Week6/assimp-6.0.4/contrib/zlib/CMakeLists.txt
+  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  gzclose.c
+  gzlib.c
+  gzread.c
+  gzwrite.c
+  inflate.c
+  infback.c
+  inftrees.c
+  inffast.c
+  trees.c
+  uncompr.c
+  zutil.c
+  zlibstatic.vcxproj -> C:\workspace\assimp\build\contrib\zlib\Release\zlibstatic.lib
