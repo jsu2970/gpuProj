@@ -485,6 +485,16 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
 
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+
+        // 흑백 텍스처(GL_RED)를 shader에서 rgb로 읽으면 빨갛게 보일 수 있음
+        // 그래서 R 값을 R, G, B 모두에 복사하도록 설정
+        // 일부 텍스처가 흑백 이미지임에도 RGB 이미지처럼 읽어서 색깔이 이상하게 보이는 문제를 방지함
+        if (nrComponents == 1)
+        {
+            GLint swizzleMask[] = { GL_RED, GL_RED, GL_RED, GL_ONE };
+            glTexParameteriv(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_RGBA, swizzleMask);
+        }
+
         glGenerateMipmap(GL_TEXTURE_2D);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
