@@ -9,10 +9,32 @@
 [Oo]bj/
 out/
 
-# 빌드 결과물
-*.exe
-*.pdb
-*.user
-
 # 기타 라이브러리 캐시
 .vsconfig
+
+# Build folders
+Debug/
+Release/
+x64/
+x86/
+**/x64/
+**/x86/
+**/Debug/
+**/Release/
+
+# Compiled files
+*.obj
+*.exe
+*.ilk
+*.pdb
+*.lib
+*.dll
+*.user
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake-build-*/
+
+# Temporary
+*.log

@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+ï»¿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -14,7 +14,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
-
+#include <cfloat>
 
 #define USE_FLASH_SHADER
 
@@ -36,6 +36,10 @@ bool firstMouse = true;
 // timing
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
+
+// ì†ì „ë“± on/offë¥¼ ìœ„í•œ ë³€ìˆ˜
+bool flashlightOn = true;
+bool fKeyPressed = false;
 
 int main()
 {
@@ -62,7 +66,7 @@ int main()
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-    //glfwSetScrollCallback(window, scroll_callback);  // È®´ë ±â´ÉÀº ºñÈ°¼ºÈ­
+    //glfwSetScrollCallback(window, scroll_callback);  // í™•ëŒ€ ê¸°ëŠ¥ì€ ë¹„í™œì„±í™”
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -141,19 +145,27 @@ int main()
         lightingShader.use();
         lightingShader.setVec3("light.position", camera.Position);
         lightingShader.setVec3("light.direction", camera.Front);
-        lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-        lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
+        lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(7.0f)));
+        lightingShader.setFloat("light.outerCutOff", glm::cos(glm::radians(12.0f)));
         lightingShader.setVec3("viewPos", camera.Position);
 
         // light properties
-        lightingShader.setVec3("light.ambient", 0.1f, 0.1f, 0.1f);
-        // we configure the diffuse intensity slightly higher; the right lighting conditions differ with each lighting method and environment.
-        // each environment and lighting type requires some tweaking to get the best out of your environment.
-        lightingShader.setVec3("light.diffuse", 0.8f, 0.8f, 0.8f);
-        lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+        if (flashlightOn)
+        {
+            lightingShader.setVec3("light.ambient", 0.02f, 0.02f, 0.02f);
+            lightingShader.setVec3("light.diffuse", 0.35f, 0.35f, 0.35f);
+            lightingShader.setVec3("light.specular", 0.15f, 0.15f, 0.15f);
+        }
+        else
+        {
+            lightingShader.setVec3("light.ambient", 0.0f, 0.0f, 0.0f);
+            lightingShader.setVec3("light.diffuse", 0.0f, 0.0f, 0.0f);
+            lightingShader.setVec3("light.specular", 0.0f, 0.0f, 0.0f);
+        }
+
         lightingShader.setFloat("light.constant", 1.0f);
-        lightingShader.setFloat("light.linear", 0.09f);
-        lightingShader.setFloat("light.quadratic", 0.032f);
+        lightingShader.setFloat("light.linear", 0.25f);
+        lightingShader.setFloat("light.quadratic", 0.20f);
 
         // material properties
         lightingShader.setFloat("shininess", 32.0f);
@@ -164,35 +176,56 @@ int main()
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
 
-        // Ä«½º ¸Ê ±×¸®±â
+        // ì¹´ìŠ¤ ë§µ ê·¸ë¦¬ê¸°
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
-        lightingShader.setMat4("model", model);
-        ourModel.Draw(lightingShader);
 
-        // ¼ÕÀüµî ¸ğµ¨ ±×¸®±â (Ä«¸Ş¶ó¿¡ ºÎÂø)
+        // ì „ë“±ì˜ ìœ„ì¹˜ë¥¼ ê°€ì ¸ì˜´
+        vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
+        int count = std::min((int)lampPositions.size(), 64);
+
+        lightingShader.setInt("lampLightCount", count);  // ì‚¬ìš©í•˜ëŠ” ì „ë“± ê°œìˆ˜ë¥¼ ë„£ìŒ
+
+        // ì‰ì´ë”ì˜ ì „ë“± ìœ„ì¹˜ê°’ê³¼ ë¹› ì²˜ë¦¬ ìƒìˆ˜ê°’ ì´ˆê¸°í™”
+        for (int i = 0; i < count; i++)
+        {
+            std::string idx = std::to_string(i);
+
+            lightingShader.setVec3("lampLights[" + idx + "].position", lampPositions[i]);
+            lightingShader.setVec3("lampLights[" + idx + "].ambient", 0.002f, 0.006f, 0.005f);
+            lightingShader.setVec3("lampLights[" + idx + "].diffuse", 0.08f, 0.22f, 0.18f);
+            lightingShader.setVec3("lampLights[" + idx + "].specular", 0.02f, 0.06f, 0.05f);
+
+            lightingShader.setFloat("lampLights[" + idx + "].constant", 1.0f);
+            lightingShader.setFloat("lampLights[" + idx + "].linear", 0.18f);
+            lightingShader.setFloat("lampLights[" + idx + "].quadratic", 0.12f);
+        }  
+
+        ourModel.Draw(lightingShader, model);
+
+        // ì†ì „ë“± ëª¨ë¸ ê·¸ë¦¬ê¸° (ì¹´ë©”ë¼ì— ë¶€ì°©)
         glm::mat4 flashModel = glm::mat4(1.0f);
 
-        // ¼ÕÀüµî À§Ä¡ °è»ê
-        // Ä«¸Ş¶ó À§Ä¡¿¡¼­ ¾ÕÂÊ(Front)À¸·Î 0.5, ¿À¸¥ÂÊ(Right)À¸·Î 0.2, ¾Æ·¡(Up)·Î 0.2¸¸Å­ ¶³¾îÁø ÁöÁ¡
+        // ì†ì „ë“± ìœ„ì¹˜ ê³„ì‚°
+        // ì¹´ë©”ë¼ ìœ„ì¹˜ì—ì„œ ì•ìª½(Front)ìœ¼ë¡œ 0.5, ì˜¤ë¥¸ìª½(Right)ìœ¼ë¡œ 0.2, ì•„ë˜(Up)ë¡œ 0.2ë§Œí¼ ë–¨ì–´ì§„ ì§€ì 
         glm::vec3 flashlightPos = camera.Position + (camera.Front * 0.5f) + (camera.Right * 0.25f) - (camera.Up * 0.25f);
 
-        flashModel = glm::translate(flashModel, flashlightPos); // À§Ä¡¸¸ ÀÌµ¿!
+        flashModel = glm::translate(flashModel, flashlightPos); // ìœ„ì¹˜ë§Œ ì´ë™!
 
-        // Ä«¸Ş¶óÀÇ ·ÎÄÃ ÁÂÇ¥ÃàÀ» ¸ğµ¨ Çà·Ä¿¡ Á÷Á¢ ÁÖÀÔ (È¸Àü µ¿±âÈ­ ÇÙ½É)
-        // Ä«¸Ş¶ó°¡ º¸´Â ¹æÇâÀ» ¸ğµ¨ÀÇ ÃàÀ¸·Î »ï½À´Ï´Ù.
+        // ì¹´ë©”ë¼ì˜ ë¡œì»¬ ì¢Œí‘œì¶•ì„ ëª¨ë¸ í–‰ë ¬ì— ì§ì ‘ ì£¼ì… (íšŒì „ ë™ê¸°í™” í•µì‹¬)
+        // ì¹´ë©”ë¼ê°€ ë³´ëŠ” ë°©í–¥ì„ ëª¨ë¸ì˜ ì¶•ìœ¼ë¡œ ì‚¼ìŠµë‹ˆë‹¤.
         flashModel[0] = glm::vec4(camera.Right, 0.0f);
         flashModel[1] = glm::vec4(camera.Up, 0.0f);
-        flashModel[2] = glm::vec4(-camera.Front, 0.0f); // OpenGLÀº ¿À¸¥¼Õ ÁÂÇ¥°èÀÌ¹Ç·Î -Front
+        flashModel[2] = glm::vec4(-camera.Front, 0.0f); // OpenGLì€ ì˜¤ë¥¸ì† ì¢Œí‘œê³„ì´ë¯€ë¡œ -Front
 
-        // (C) ¸ğµ¨ ÃÊ±â È¸Àü º¸Á¤ (¿©±â°¡ Áß¿ä!)
+        // (C) ëª¨ë¸ ì´ˆê¸° íšŒì „ ë³´ì • (ì—¬ê¸°ê°€ ì¤‘ìš”!)
         flashModel = glm::rotate(flashModel, glm::radians(-80.0f), glm::vec3(0, 1, 0));
         flashModel = glm::rotate(flashModel, glm::radians(75.0f), glm::vec3(0.1, 0, 1));
 
-        flashModel = glm::scale(flashModel, glm::vec3(0.03f)); // ¸ğµ¨ Å©±â¿¡ ¸Â°Ô Á¶Àı [cite: 796]
-        lightingShader.setMat4("model", flashModel);
-        flashlightModel.Draw(lightingShader);
+        flashModel = glm::scale(flashModel, glm::vec3(0.03f)); // ëª¨ë¸ í¬ê¸°ì— ë§ê²Œ ì¡°ì ˆ [cite: 796]
+        
+        flashlightModel.Draw(lightingShader, flashModel);
 #endif
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -222,6 +255,17 @@ void processInput(GLFWwindow *window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    // f ë²„íŠ¼ìœ¼ë¡œ ì†ì „ë“±ì„ ê»ë‹¤ í‚´
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS && !fKeyPressed)
+    {
+        flashlightOn = !flashlightOn;
+        fKeyPressed = true;
+    }
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_RELEASE)
+    {
+        fKeyPressed = false;
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

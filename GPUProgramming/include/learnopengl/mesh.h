@@ -1,4 +1,4 @@
-#ifndef MESH_H
+﻿#ifndef MESH_H
 #define MESH_H
 
 #include <glad/glad.h> // holds all OpenGL type declarations
@@ -25,29 +25,47 @@ struct Vertex {
     glm::vec3 Tangent;
     // bitangent
     glm::vec3 Bitangent;
+
 	//bone indexes which will influence this vertex
 	int m_BoneIDs[MAX_BONE_INFLUENCE];
 	//weights from each bone
 	float m_Weights[MAX_BONE_INFLUENCE];
 };
 
+// 이미지 파일 정보
 struct Texture {
     unsigned int id;
     string type;
     string path;
 };
 
+/*
+    해당 mesh에서 사용하는 텍스처가 발광용인지 구분하기 위해 사용하는 구조체임
+    텍스처: 벽지 이미지 파일, material: 벽지 + 반사 정도 + 밝기 등의 전체 인테리어 설정
+    따라서 true인 텍스처에 대해 emission 효과를 처리하기 위해 추가한 구조체임
+*/
+struct MaterialInfo {
+    string name;  // 해당 텍스처의 번호
+    unsigned int index;
+    bool emissive = false;  // 해당 값이 true면 전등임
+};
+
 class Mesh {
 public:
     // mesh Data
+    string name;  // 해당 mesh의 이름을 저장함 (전등을 찾기 위함)
+    unsigned int materialIndex;  // 이 mesh가 사용하는 material 번호
+
     vector<Vertex>       vertices;
     vector<unsigned int> indices;
     vector<Texture>      textures;
     unsigned int VAO;
 
     // constructor
-    Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
+    Mesh(string name, unsigned int materialIndex, vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures)
     {
+        this->name = name;  // 이름 저장
+        this->materialIndex = materialIndex;
         this->vertices = vertices;
         this->indices = indices;
         this->textures = textures;
