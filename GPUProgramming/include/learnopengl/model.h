@@ -29,6 +29,14 @@ struct ModelNode {
     glm::mat4 transform;  // 이 node의 누적 transform -> object의 정확한 위치를 찾기 위함
 };
 
+// 카스 맵의 삼각형 한 개 좌표정보를 저장하는 구조체 (바닥, 벽 검사에 사용)
+struct Triangle {
+    glm::vec3 a;
+    glm::vec3 b;
+    glm::vec3 c;
+    glm::vec3 normal;
+};
+
 // 이전 코드: node를 순회하면서 mesh를 생성함
 // 수정 후 코드: mesh를 먼저 생성한 후, node는 어떤 mesh를 쓰는지만 저장함
 class Model 
@@ -208,6 +216,63 @@ public:
         }
 
         return mergedPositions;
+    }
+
+    /*
+        gltf 맵 안의 모든 삼각형을 월드 좌표 기준으로 꺼내서 저장하는 함수
+
+        Model
+         └─ nodes
+             └─ meshIndices
+                 └─ Mesh
+                     └─ vertices
+                     └─ indices (삼각형)
+    */
+    vector<Triangle> GetCollisionTriangles(glm::mat4 modelMatrix)
+    {
+        vector<Triangle> tris;  // 맵의 모든 triangle을 여기에 담음
+
+        for (unsigned int n = 0; n < nodes.size(); n++)  // 모든 노드를 순회함
+        {
+            ModelNode& node = nodes[n];
+
+            glm::mat4 worldMatrix = modelMatrix * node.transform;  // 월드 좌표인 modelMatrix를 곱해서 실제 월드에서의 위치를 구함
+
+            for (unsigned int mi = 0; mi < node.meshIndices.size(); mi++)  // node가 가진 모든 mesh를 순회함
+            {
+                Mesh& mesh = meshes[node.meshIndices[mi]];  // 해당 노드가 사용하는 실제 mesh를 하나 가져옴
+
+                for (unsigned int i = 0; i + 2 < mesh.indices.size(); i += 3)  // 삼각형 정점 3개씩 읽음
+                {
+                    unsigned int ia = mesh.indices[i];  // 삼각형의 첫 번째 꼭짓점 위치
+                    unsigned int ib = mesh.indices[i + 1];  // 둘
+                    unsigned int ic = mesh.indices[i + 2];  // 셋
+
+                    glm::vec3 a = mesh.vertices[ia].Position;  // 첫 꼭짓점 위치 x, y, z를 구함
+
+                    glm::vec3 b = mesh.vertices[ib].Position;
+
+                    glm::vec3 c = mesh.vertices[ic].Position;
+
+                    a = glm::vec3(worldMatrix * glm::vec4(a, 1.0));  // 각 꼭짓점의 월드 기준 좌표를 구함
+                    b = glm::vec3(worldMatrix * glm::vec4(b, 1.0));
+                    c = glm::vec3(worldMatrix * glm::vec4(c, 1.0));
+
+                    glm::vec3 normal = glm::normalize(glm::cross(b - a, c - a));  // 삼각형의 방향 계산
+
+                    // 삼각형 정보 하나를 완성하여 배열에 넣음
+                    Triangle tri;
+                    tri.a = a;
+                    tri.b = b;
+                    tri.c = c;
+                    tri.normal = normal;
+
+                    tris.push_back(tri);
+                }
+            }
+        }
+
+        return tris;
     }
     
 private:
