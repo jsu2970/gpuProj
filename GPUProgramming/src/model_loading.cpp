@@ -31,8 +31,8 @@ bool RayIntersectsTriangle(glm::vec3 rayOrigin, glm::vec3 rayDir, const Triangle
 float DistancePointToSegment2D(glm::vec2 p, glm::vec2 a, glm::vec2 b);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1600;
+const unsigned int SCR_HEIGHT = 900;
 
 // camera
 Camera camera(glm::vec3(-7.0f, -3.0f, 20.0f));
@@ -42,6 +42,11 @@ bool firstMouse = true;
 
 // 충돌 삼각형. 이 변수를 통해 플레이어가 부딪힐 곳을 설정함
 vector<Triangle> collisionTriangles;
+
+// 중력 변수
+float verticalVelocity = 0.0f;
+float gravity = -9.8f;
+bool isGrounded = false;
 
 // timing
 float deltaTime = 0.0f;
@@ -275,7 +280,7 @@ void processInput(GLFWwindow *window)
 
     // 이동 전 위치 저장
     glm::vec3 oldPos = camera.Position;
-
+    
     glm::vec3 desiredPos = camera.Position;
 
     // 이동 버튼
@@ -288,51 +293,60 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
 
-    // 일단 원래 위치로 되돌림
+    // 이동 후 목표 위치 (벽에 충돌하지 않는다면 그대로 적용됨)
     desiredPos = camera.Position;
 
     // 핵심: 실제 위치를 다시 oldPos로 되돌린 뒤 x/z를 따로 시도
     camera.Position = oldPos;
 
     // x 이동만 시도
-    glm::vec3 tryX = camera.Position;
-    tryX.x = desiredPos.x;
+    glm::vec3 tryX = camera.Position;  // 이동 전 위치를 tryX에 넣음
+    tryX.x = desiredPos.x;  // tryX값에 이동 후 x좌표를 넣음
 
-    float groundX = GetGroundY(tryX);
-    if (groundX > -9999.0f)
-        tryX.y = groundX + eyeHeight;
-
-    if (!CheckWallCollision(tryX))
-        camera.Position = tryX;
+    if (!CheckWallCollision(tryX))  // tryX로 x축만 이동해서 충돌이 일어나지 않은 경우
+        camera.Position = tryX;  // 카메라 위치를 x축은 이동한 것으로 판정 (만약 충돌난다면 x축은 기존 oldPos값을 쓰게 됨)
 
     // z 이동만 시도
     glm::vec3 tryZ = camera.Position;
     tryZ.z = desiredPos.z;
 
-    float groundZ = GetGroundY(tryZ);
-    if (groundZ > -9999.0f)
-        tryZ.y = groundZ + eyeHeight;
-
     if (!CheckWallCollision(tryZ))
-        camera.Position = tryZ;
+        camera.Position = tryZ;  // 여기까지의 결과가 합쳐져서 x, z 둘 다 움직였다면 처음 목표 이동 위치인 desiredPos와 같아짐
 
-    //// 현재 카메라 위치 아래로 ray를 쏴서 지금 발 밑에 있는 바닥 삼각형 높이를 구함
-    //float ground = GetGroundY(camera.Position);
+    // 중력 계산
+    // 현재 카메라 위치 아래로 ray를 쏴서 지금 발 밑에 있는 바닥 삼각형 높이를 구함
+    float ground = GetGroundY(camera.Position);  
 
-    //if (ground > -9999.0f)  // 바닥의 초기값을 -10000.0f로 두어서 유효한 바닥을 찾았는지 검사함
-    //{
-    //    camera.Position.y = ground + eyeHeight;  // ground는 발바닥 높이지만 카메라는 사람 눈 위치기 때문에 키 만큼 y축 높이를 더함
-    //}
-    //else  // 바닥을 찾지 못한 경우 (맵 밖, 구멍 등) 기존 높이를 유지함
-    //{
-    //    camera.Position.y = oldPos.y;
-    //}
+    if (ground > -9999.0f)  // 바닥의 초기값을 -10000.0f로 두어서 유효한 바닥을 찾았는지 검사함
+    {
+        verticalVelocity += gravity * deltaTime;  // 속도가 점점 아래 방향으로 증가
 
-    //// 벽에 부딪혔는지 검사하여 부딪히면 이전 위치로 이동함
-    //if (CheckWallCollision(camera.Position))
-    //{
-    //    camera.Position = oldPos;
-    //}
+        float nextCameraY = camera.Position.y + verticalVelocity * deltaTime;  // 다음 카메라 위치를 미리 구함
+        float nextFeetY = nextCameraY - eyeHeight;  // 다음 발 위치를 미리 구함
+
+        /*
+        * currentFeetY는 유저가 바닥에 서 있을 때 있어야 하는 발 위치임
+        * ground = 0, eyeHeight = 0.7 이라면 유저가 정상적으로 서 있다면 카메라 y값은 0.7임
+        * 그런데 카메라 위치가 8로 높은 위치에 존재한다면 떨어지고 있는 중이므로 해당 값들을 비교하면서 중력을 계산함
+        */ 
+        if (nextFeetY <= ground)  // 다음 발 위치가 바닥보다 아래로 내려가려 한다면 착지 처리함
+        {
+            camera.Position.y = ground + eyeHeight;  // 내려왔다면 유저가 서 있어야 할 눈 높이를 카메라 y축에 넣음
+            verticalVelocity = 0.0f;  // 떨어지는 속도를 0으로 함
+            isGrounded = true;
+        }
+        else
+        {
+            camera.Position.y = nextCameraY;  // 현재 카메라 위치에 y축 값을 넣음
+            isGrounded = false;
+        }
+    }
+    else  // 유효한 바닥을 찾지 못한 경우 (맵 밖으로 떨어진 경우)
+    {
+        verticalVelocity += gravity * deltaTime;  // 속도가 점점 아래 방향으로 증가
+        camera.Position.y += verticalVelocity * deltaTime;  // 실제로 아래로 이동
+        isGrounded = false;
+    }
 
     // f 버튼으로 손전등을 껐다 킴
     if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS && !fKeyPressed)
@@ -405,13 +419,7 @@ float GetGroundY(glm::vec3 pos)
         float t;  // 바닥의 위치를 저장하는 변수
         if (RayIntersectsTriangle(rayOrigin, rayDir, tri, t))  // ray와 삼각형 충돌 여부를 검사함
         {
-            //if (t < closestT)  // 지하가 존재할 수 있으므로 가장 가까운 바닥을 찾음
-            //{
-            //    closestT = t;  
-            //    glm::vec3 hitPoint = rayOrigin + rayDir * t;  // ray 위의 실제 충돌 지점을 계산함
-            //    closestY = hitPoint.y;  // ray와 triangle이 실제로 만난 위치 중 y좌표만 뽑아 씀
-            //}
-            glm::vec3 hitPoint = rayOrigin + rayDir * t;
+            glm::vec3 hitPoint = rayOrigin + rayDir * t;  // ray 위의 실제 충돌 지점을 계산함
 
             // 너무 높은 천장은 바닥으로 보지 않음
             if (hitPoint.y > feetY + stepHeight)
@@ -421,10 +429,10 @@ float GetGroundY(glm::vec3 pos)
             if (hitPoint.y < feetY - fallHeight)
                 continue;
 
-            if (t < closestT)
+            if (t < closestT)  // 지하가 존재할 수 있으므로 가장 가까운 바닥을 찾음
             {
                 closestT = t;
-                closestY = hitPoint.y;
+                closestY = hitPoint.y;  // ray와 triangle이 실제로 만난 위치 중 y좌표만 뽑아 씀
             }
         }
     }
