@@ -38,3 +38,5 @@ cmake-build-*/
 
 # Temporary
 *.log
+*.vcxproj
+GPUProgramming/ModelLoading.vcxproj.filters

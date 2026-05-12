@@ -19,8 +19,6 @@
 #include <algorithm>
 #include <cmath>
 
-#define USE_FLASH_SHADER
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -64,6 +62,59 @@ float playerRadius = 0.2f;  // 몸통 반지름
 float stepHeight = 0.2f;   // 올라갈 수 있는 최대 높이
 float fallHeight = 1.0f;   // 아래로 찾을 최대 깊이
 
+/* 
+    특정 좌표를 지나면 post - processing 효과를 주기 위해 해당 좌표를 영역으로 저장하는 구조체임
+
+    minX ---------------- maxX
+      |                      |
+      |       문 영역        |
+      |                      |
+    minZ ---------------- maxZ
+*/
+struct TriggerZone {
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
+    float minZ;
+    float maxZ;
+};
+
+// 현재 유저가 문 영역 안에 있는지 검사하는 함수임
+bool IsInsideZone(glm::vec3 pos, TriggerZone zone)
+{
+    return  pos.x >= zone.minX && pos.x <= zone.maxX &&
+            pos.y >= zone.minY && pos.y <= zone.maxY &&
+            pos.z >= zone.minZ && pos.z <= zone.maxZ;
+}
+
+// 유저가 문 영역을 넘어서 정말로 건물 안으로 들어왔는지 검사하는 함수임
+bool CrossedLine(float prev, float curr, float line)  // prev는 이전 위치, curr는 현재 위치
+{
+    return (prev < line && curr >= line) ||
+        (prev >= line && curr < line);
+}
+
+// 이전 또는 현재 위치 둘 중 하나라도 유저가 문 영역 안에 있었는지 검사하는 함수
+bool NearDoorCrossed(glm::vec3 prevPos, glm::vec3 currPos, TriggerZone door, char axis, float line)
+{
+    // 이전 위치 혹은 현재 위치가 영역 안인가?
+    bool nearDoor = IsInsideZone(prevPos, door) || IsInsideZone(currPos, door);
+
+    if (!nearDoor)
+        return false;  // 아니라면 검사 안함
+
+    // 문의 line이 x축 기준인 경우
+    if (axis == 'x')
+        return CrossedLine(prevPos.x, currPos.x, line);
+
+    // 문의 line이 z축 기준인 경우
+    if (axis == 'z')
+        return CrossedLine(prevPos.z, currPos.z, line);
+
+    return false;  // 건물 안쪽으로 간게 아니면 false
+}
+
 int main()
 {
     // glfw: initialize and configure
@@ -72,10 +123,6 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
 
     // glfw window creation
     // --------------------
@@ -111,11 +158,8 @@ int main()
 
     // build and compile shaders
     // -------------------------
-#ifndef USE_FLASH_SHADER
-    Shader ourShader("shader/1.model_loading.vs", "shader/1.model_loading.fs");
-#else
+
     Shader lightingShader("shader/5.4.light_casters.vs", "shader/5.4.light_casters.fs");
-#endif
 
     // load models
     // -----------
@@ -126,7 +170,122 @@ int main()
     collisionTriangles = ourModel.GetCollisionTriangles(mapMatrix);  // 충돌 삼각형들을 모두 계산함
     cout << "collision tris: " << collisionTriangles.size() << endl;
 
-    Model flashlightModel("resources/flash_light/scene.gltf");
+    Model flashlightModel("resources/flash_light/scene.gltf");  // 손전등 로드
+
+    // post-processing위해 유저가 지나갔을 때 트리거가 발동할 공간의 margin값
+    float marginXZ = 0.5f;
+    float marginY = 0.15f;
+
+    // 머나먼 곳 와인창고 입구
+    TriggerZone door1A = {
+        -10.2488f - marginXZ, -10.2488f + marginXZ,
+        -0.42f - marginY, -0.42f + marginY,
+        -12.0614f - marginXZ, -12.0614f + marginXZ
+    };
+
+    // 다리 아래 와인창고 입구
+    TriggerZone door1B = {
+        -2.48595f - marginXZ, -2.48595f + marginXZ,
+        -2.02f - marginY, -2.02f + marginY,
+        -16.0774f - marginXZ, -16.0774f + marginXZ
+    };
+
+    // 테러리스트 인질 건물 입구
+    TriggerZone door2A = {
+        9.35265f - marginXZ, 9.35265f + marginXZ,
+        -0.5f - marginY, -0.5f + marginY,
+        -19.94f - marginXZ, -19.94f + marginXZ
+    };
+
+    // 테러리스트 인질 건물 배란다
+    TriggerZone door2B = {
+        9.22476f - marginXZ, 9.22476f + marginXZ,
+        0.78f - marginY, 0.78f + marginY,
+        -19.8493f - marginXZ, -19.8493f + marginXZ
+    };
+
+    // 옥상 아래 건물 입구
+    TriggerZone door3A = {
+        -8.19693f - marginXZ, -8.19693f + marginXZ,
+        -0.42f - marginY, -0.42f + marginY,
+        -6.5113f - marginXZ, -6.5113f + marginXZ
+    };
+
+    // 대테러리스트 방향 배란다
+    TriggerZone door3B = {
+        -4.31245f - marginXZ, -4.31245f + marginXZ,
+        -0.82f - marginY, -0.82f + marginY,
+        2.82221f - marginXZ, 2.82221f + marginXZ
+    };
+
+    // 유저가 트리거가 되는 문에 있는지, 건물 안에 있는지 판별하는 값
+    bool insideBuilding = false;
+    bool wasInDoorZone = false;
+
+    // 유저의 이전 위치를 저장하는 변수
+    glm::vec3 prevPlayerPos = camera.Position;
+
+    // post-processing을 위한 기본 처리들
+    float quadVertices[] = {
+        // positions   // texCoords
+        -1.0f,  1.0f,  0.0f, 1.0f,
+        -1.0f, -1.0f,  0.0f, 0.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+
+        -1.0f,  1.0f,  0.0f, 1.0f,
+         1.0f, -1.0f,  1.0f, 0.0f,
+         1.0f,  1.0f,  1.0f, 1.0f
+    };
+
+    unsigned int quadVAO, quadVBO;
+
+    glGenVertexArrays(1, &quadVAO);
+    glGenBuffers(1, &quadVBO);
+
+    glBindVertexArray(quadVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+    // 위치
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+
+    // 텍스처 좌표
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+
+    glBindVertexArray(0);
+
+    // 스크린 쉐이더 생성
+    Shader screenShader("shader/screen.vs", "shader/screen.fs");
+
+    screenShader.use();
+    screenShader.setInt("screenTexture", 0);
+
+    // framebuffer configuration
+    // -------------------------
+    unsigned int framebuffer;
+    glGenFramebuffers(1, &framebuffer);
+    glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+    // create a color attachment texture
+    unsigned int textureColorbuffer;
+    glGenTextures(1, &textureColorbuffer);
+    glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCR_WIDTH, SCR_HEIGHT, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureColorbuffer, 0);
+    // create a renderbuffer object for depth and stencil attachment (we won't be sampling these)
+    unsigned int rbo;
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, SCR_WIDTH, SCR_HEIGHT); // use a single renderbuffer object for both a depth AND stencil buffer.
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo); // now actually attach it
+    // now that we actually created the framebuffer and added all attachments we want to check if it is actually complete now
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
         
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -145,30 +304,27 @@ int main()
         // -----
         processInput(window);
 
+        // 유저가 서 있는 위치를 1초마다 출력
+        static float lastPrint = 0.0f;
+
+        if (glfwGetTime() - lastPrint > 1.0f)
+        {
+            lastPrint = glfwGetTime();
+
+            cout << "Player Pos: "
+                << camera.Position.x << ", "
+                << camera.Position.y << ", "
+                << camera.Position.z << endl;
+        }
+
         // render
         // ------
+        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+        glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+
         glClearColor(0.25f, 0.05f, 0.05f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-#ifndef USE_FLASH_SHADER
-        // don't forget to enable shader before setting uniforms
-        ourShader.use();
-
-        // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("projection", projection);
-        ourShader.setMat4("view", view);
-
-        // render the loaded model
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
-        ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
    
-
-#else
         // be sure to activate shader when setting uniforms/drawing objects
         lightingShader.use();
         lightingShader.setVec3("light.position", camera.Position);
@@ -247,16 +403,68 @@ int main()
         flashModel[1] = glm::vec4(camera.Up, 0.0f);
         flashModel[2] = glm::vec4(-camera.Front, 0.0f); // OpenGL은 오른손 좌표계이므로 -Front
 
-        // (C) 모델 초기 회전 보정 (여기가 중요!)
+        // 손전등 모델 초기 회전 보정 
         flashModel = glm::rotate(flashModel, glm::radians(-80.0f), glm::vec3(0, 1, 0));
         flashModel = glm::rotate(flashModel, glm::radians(75.0f), glm::vec3(0.1, 0, 1));
 
         flashModel = glm::scale(flashModel, glm::vec3(0.03f)); // 모델 크기에 맞게 조절 [cite: 796]
-        
+
         glDisable(GL_DEPTH_TEST);
         flashlightModel.Draw(lightingShader, flashModel);
         glEnable(GL_DEPTH_TEST);
-#endif
+
+        // 카메라에 post-processing 효과를 넣음. 유저가 특정 영역을 지나는지 검사
+        glm::vec3 playerPos = camera.Position;
+
+        // 1번 건물 A문: z가 작아지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door1A, 'z', -12.0614f))
+        {
+            insideBuilding = playerPos.z < -12.0614f;
+        }
+        // 1번 건물 B문: x가 작아지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door1B, 'x', -2.48595f))
+        {
+            insideBuilding = playerPos.x < -2.48595f;
+        }
+        // 2번 건물 A문: z가 작아지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door2A, 'z', -19.94f))
+        {
+            insideBuilding = playerPos.z < -19.94f;
+        }
+        // 2번 건물 B문: z가 작아지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door2B, 'z', -19.8493f))
+        {
+            insideBuilding = playerPos.z < -19.8493f;
+        }
+        // 3번 건물 A문: z가 커지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door3A, 'z', -6.5113f))
+        {
+            insideBuilding = playerPos.z > -6.5113f;
+        }
+        // 3번 건물 B문: x가 작아지면 안쪽
+        if (NearDoorCrossed(prevPlayerPos, playerPos, door3B, 'x', -4.31245f))
+        {
+            insideBuilding = playerPos.x < -4.31245f;
+        }
+        bool useHorrorFilter = insideBuilding;  // 건물 내부라면 필터 적용
+
+        prevPlayerPos = playerPos;  // 유저의 이전 위치 저장
+
+        // 후처리 셰이더로 화면 사각형 렌더링
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glDisable(GL_DEPTH_TEST);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        screenShader.use();
+        screenShader.setBool("useHorrorFilter", useHorrorFilter);  // 필터 적용 여부
+        screenShader.setInt("horrorMode", 4);  // 필터 모드
+        screenShader.setFloat("time", glfwGetTime());
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureColorbuffer);
+
+        glBindVertexArray(quadVAO);
+        glDrawArrays(GL_TRIANGLES, 0, 6);  // 화면 전체에 그리기
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
