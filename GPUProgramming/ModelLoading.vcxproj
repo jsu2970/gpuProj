@@ -23,10 +23,10 @@
     <ClCompile Include="src\model_loading.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\1.model_loading.fs" />
-    <None Include="shader\1.model_loading.vs" />
     <None Include="shader\5.4.light_casters.fs" />
     <None Include="shader\5.4.light_casters.vs" />
+    <None Include="shader\screen.fs" />
+    <None Include="shader\screen.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\learnopengl\camera.h" />

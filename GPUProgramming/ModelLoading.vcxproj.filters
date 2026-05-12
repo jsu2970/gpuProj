@@ -23,16 +23,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\1.model_loading.fs">
-      <Filter>source files</Filter>
-    </None>
-    <None Include="shader\1.model_loading.vs">
-      <Filter>source files</Filter>
-    </None>
     <None Include="shader\5.4.light_casters.fs">
       <Filter>source files</Filter>
     </None>
     <None Include="shader\5.4.light_casters.vs">
+      <Filter>source files</Filter>
+    </None>
+    <None Include="shader\screen.fs">
+      <Filter>source files</Filter>
+    </None>
+    <None Include="shader\screen.vs">
       <Filter>source files</Filter>
     </None>
   </ItemGroup>
