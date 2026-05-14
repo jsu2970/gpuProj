@@ -27,8 +27,6 @@ x86/
 *.exe
 *.ilk
 *.pdb
-*.lib
-*.dll
 *.user
 
 # CMake
