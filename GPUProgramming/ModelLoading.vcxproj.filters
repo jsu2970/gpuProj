@@ -43,5 +43,8 @@
     <Filter Include="header files">
       <UniqueIdentifier>{183d60f9-ac8a-4f79-8134-ee1e9ee9f7e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sounds">
+      <UniqueIdentifier>{f7267805-a416-471b-b6e3-57aef891080c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
