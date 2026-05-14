@@ -26,6 +26,8 @@
 #define DR_WAV_IMPLEMENTATION
 #include <AL/dr_wav.h>
 
+struct TriggerZone;
+struct Sound;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -34,6 +36,15 @@ float GetGroundY(glm::vec3 pos);  // 오르막 계산을 위한 위치 검사
 bool CheckWallCollision(glm::vec3 pos);  // 충돌 검사
 bool RayIntersectsTriangle(glm::vec3 rayOrigin, glm::vec3 rayDir, const Triangle& tri, float& t);
 float DistancePointToSegment2D(glm::vec2 p, glm::vec2 a, glm::vec2 b);
+bool IsInsideZone(glm::vec3 pos, TriggerZone zone);
+bool CrossedLine(float prev, float curr, float line);
+bool NearDoorCrossed(glm::vec3 prevPos, glm::vec3 currPos, TriggerZone door, char axis, float line);
+bool InitOpenAL();
+void DeleteSound(Sound& sound);
+void ShutdownOpenAL();
+ALuint LoadWav(const char* filename);
+Sound CreateSound(const char* filePath, float volume, bool loop, glm::vec3 position, bool is3D);
+glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos);
 
 // settings
 const unsigned int SCR_WIDTH = 1600;
@@ -119,221 +130,6 @@ Sound flashLightSound;
 float clangTimer = 0.0f;              // metal clang 타이머
 float nextClangTime = 20.0f;          // 시작 후 첫 소리는 20초 뒤
 bool firstClangPlayed = false;        // 첫 clang 여부
-
-// 현재 유저가 문 영역 안에 있는지 검사하는 함수임
-bool IsInsideZone(glm::vec3 pos, TriggerZone zone)
-{
-    return  pos.x >= zone.minX && pos.x <= zone.maxX &&
-            pos.y >= zone.minY && pos.y <= zone.maxY &&
-            pos.z >= zone.minZ && pos.z <= zone.maxZ;
-}
-
-// 유저가 문 영역을 넘어서 정말로 건물 안으로 들어왔는지 검사하는 함수임
-bool CrossedLine(float prev, float curr, float line)  // prev는 이전 위치, curr는 현재 위치
-{
-    return (prev < line && curr >= line) ||
-        (prev >= line && curr < line);
-}
-
-// 이전 또는 현재 위치 둘 중 하나라도 유저가 문 영역 안에 있었는지 검사하는 함수
-bool NearDoorCrossed(glm::vec3 prevPos, glm::vec3 currPos, TriggerZone door, char axis, float line)
-{
-    // 이전 위치 혹은 현재 위치가 영역 안인가?
-    bool nearDoor = IsInsideZone(prevPos, door) || IsInsideZone(currPos, door);
-
-    if (!nearDoor)
-        return false;  // 아니라면 검사 안함
-
-    // 문의 line이 x축 기준인 경우
-    if (axis == 'x')
-        return CrossedLine(prevPos.x, currPos.x, line);
-
-    // 문의 line이 z축 기준인 경우
-    if (axis == 'z')
-        return CrossedLine(prevPos.z, currPos.z, line);
-
-    return false;  // 건물 안쪽으로 간게 아니면 false
-}
-
-// OpenAL (사운드)를 초기화 하는 함수
-bool InitOpenAL()
-{
-    audioDevice = alcOpenDevice(nullptr);  // 컴퓨터의 실제 오디오 장치에 연결 (윈도우 기본 스피커 사용)
-    if (!audioDevice)
-    {
-        std::cout << "OpenAL device failed\n";
-        return false; 
-    }
-
-    audioContext = alcCreateContext(audioDevice, nullptr);  // OpenAL 작업공간 생성
-    if (!audioContext)
-    {
-        std::cout << "OpenAL context failed\n";
-        return false;
-    }
-
-    alcMakeContextCurrent(audioContext);  // 앞으로 OpenAL 명령은 audiContext에 적용한다는 의미
-    return true;  // OpenAL 준비 완료
-}
-
-// OpenAL을 종료하는 함수
-void DeleteSound(Sound& sound)
-{
-    if (sound.source != 0)
-    {
-        alDeleteSources(1, &sound.source);
-        sound.source = 0;
-    }
-
-    if (sound.buffer != 0)
-    {
-        alDeleteBuffers(1, &sound.buffer);
-        sound.buffer = 0;
-    }
-}
-
-void ShutdownOpenAL()
-{
-    DeleteSound(bgmSound);
-    DeleteSound(heartBeatSound);
-    DeleteSound(metalClangSound);
-    DeleteSound(flashLightSound);
-    // 여러 발소리 사운드 삭제
-    for (Sound& s : footstepSounds)
-    {
-        DeleteSound(s);
-    }
-    footstepSounds.clear();
-    // 여러 전등 사운드 삭제
-    for (Sound& s : electronicSounds)
-    {
-        DeleteSound(s);
-    }
-    electronicSounds.clear();
-
-    alcMakeContextCurrent(nullptr);
-
-    if (audioContext)
-    {
-        alcDestroyContext(audioContext);
-        audioContext = nullptr;
-    }
-
-    if (audioDevice)
-    {
-        alcCloseDevice(audioDevice);
-        audioDevice = nullptr;
-    }
-}
-
-// .wav 파일을 읽어서 OpenAL buffer로 변환하는 함수 (OpenAL은 오직 재생 역할만 담당함)
-ALuint LoadWav(const char* filename)
-{
-    unsigned int channels;
-    unsigned int sampleRate;
-    drwav_uint64 totalPCMFrameCount;
-
-    int16_t* sampleData = drwav_open_file_and_read_pcm_frames_s16(
-        filename,
-        &channels,
-        &sampleRate,
-        &totalPCMFrameCount,
-        nullptr
-    );
-
-    if (!sampleData)
-    {
-        std::cout << "Failed to load wav\n";
-        return 0;
-    }
-
-    ALenum format =
-        (channels == 1)
-        ? AL_FORMAT_MONO16
-        : AL_FORMAT_STEREO16;
-
-    ALuint buffer;
-
-    alGenBuffers(1, &buffer);
-
-    alBufferData(
-        buffer,
-        format,
-        sampleData,
-        totalPCMFrameCount * channels * sizeof(int16_t),
-        sampleRate
-    );
-
-    drwav_free(sampleData, nullptr);
-
-    return buffer;
-}
-
-// 사운드 객체를 생성함
-Sound CreateSound(
-    const char* filePath,  // 재생할 wav 파일 경로
-    float volume,  // 소리 크기
-    bool loop,  // 반복 재생 여부
-    glm::vec3 position,  // 소리 위치
-    bool is3D  // true는 위치 기반 소리, false는 일반 효과음 재생
-)
-{
-    Sound sound;
-
-    sound.buffer = LoadWav(filePath);
-
-    if (sound.buffer == 0)
-    {
-        std::cout << "Sound load failed: " << filePath << std::endl;
-        return sound;
-    }
-
-    alGenSources(1, &sound.source);
-
-    alSourcei(sound.source, AL_BUFFER, sound.buffer);
-    alSourcef(sound.source, AL_GAIN, volume);
-    alSourcei(sound.source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
-
-    // 3D 사운드면 월드 좌표를 적용
-    if (is3D)
-    {
-        alSource3f(
-            sound.source,
-            AL_POSITION,
-            position.x,
-            position.y,
-            position.z
-        );
-
-        // 3d 사운드 거리 감쇠
-        alSourcef(sound.source, AL_REFERENCE_DISTANCE, 1.5f);  // 이 거리까지는 최대 볼륨 유지
-        alSourcef(sound.source, AL_MAX_DISTANCE, 12.0f);  // 이 거리가 되면 최소 볼륨
-        alSourcef(sound.source, AL_ROLLOFF_FACTOR, 2.5f);  // 거리에 따라 얼마나 빨리 작아질지
-    }
-
-    return sound;
-}
-
-float RandomFloat(float min, float max)
-{
-    return min + static_cast<float>(rand()) / RAND_MAX * (max - min);
-}
-
-// metal clang을 재생하기 위한 랜덤 위치를 계산하는 함수
-glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos)
-{
-    // 유저로부터 얼마나 떨어질지 랜덤 거리
-    float distance = 8.0f + static_cast<float>(rand()) / RAND_MAX * 7.0f;
-
-    // 수정: 0~360도 랜덤 방향
-    float angle = static_cast<float>(rand()) / RAND_MAX * glm::two_pi<float>();
-
-    // 원형으로 랜덤 위치 계산
-    float x = playerPos.x + cos(angle) * distance;
-    float z = playerPos.z + sin(angle) * distance;
-
-    return glm::vec3(x, playerPos.y, z);  // 위치 반환
-}
 
 int main()
 {
@@ -522,11 +318,17 @@ int main()
     {
         // 발자국 사운드 여러 개 로딩
         footstepSounds.push_back(CreateSound("resources/sounds/footstep1.wav", 0.40f, false, glm::vec3(0.0f), false));
-        footstepSounds.push_back(CreateSound("resources/sounds/footstep2.wav", 0.40f, false, glm::vec3(0.0f), false));
+        footstepSounds.push_back(CreateSound("resources/sounds/footstep2.wav", 0.60f, false, glm::vec3(0.0f), false));
         footstepSounds.push_back(CreateSound("resources/sounds/footstep3.wav", 0.40f, false, glm::vec3(0.0f), false));
 
         heartBeatSound = CreateSound("resources/sounds/heart_beat.wav", 0.40f, false, glm::vec3(0.0f), false);
-        metalClangSound = CreateSound("resources/sounds/metal_clang.wav", 0.25f, false, glm::vec3(0.0f), true);
+
+        // metal clang에만 따로 소리 감쇠 적용
+        metalClangSound = CreateSound("resources/sounds/metal_clang.wav", 0.3f, false, glm::vec3(0.0f), true);
+        alSourcef(metalClangSound.source, AL_REFERENCE_DISTANCE, 5.0f);
+        alSourcef(metalClangSound.source, AL_MAX_DISTANCE, 40.0f);
+        alSourcef(metalClangSound.source, AL_ROLLOFF_FACTOR, 1.0f);
+
         flashLightSound = CreateSound("resources/sounds/flash_light.wav", 0.40f, false, glm::vec3(0.0f), false);
 
         bgmSound = CreateSound("resources/sounds/bgm.wav", 0.08f, true, glm::vec3(0.0f), false);  // 반복 재생 사운드는 초기화 직후 재생
@@ -543,7 +345,7 @@ int main()
         };
 
         for (glm::vec3 pos : electricPositions) {
-            Sound s = CreateSound("sounds/electric.wav", 0.05f, true, pos, true);  // 위치별로 전등 소리 생성
+            Sound s = CreateSound("resources/sounds/electric.wav", 0.3f, true, pos, true);  // 위치별로 전등 소리 생성
 
             if (s.source != 0) {
                 alSourcePlay(s.source);  // 소리를 재생
@@ -869,7 +671,7 @@ void processInput(GLFWwindow *window)
     if (soundEnabled)
     {
         static float footstepTimer = 0.0f;
-        float footstepInterval = 0.37f;  // 발소가 간격
+        float footstepInterval = 0.52f;  // 발소가 간격
         float movedDistance = glm::length(camera.Position - oldPos);  // 이동 거리 계산
 
         bool moved = movedDistance > 0.001f;  // 이동 거리가 거의 없는 경우 발자국 소리를 내지 않음
@@ -1110,4 +912,220 @@ float DistancePointToSegment2D(glm::vec2 p, glm::vec2 a, glm::vec2 b)
 
     glm::vec2 closest = a + t * ab; 
     return glm::length(p - closest);
+}
+
+// 현재 유저가 문 영역 안에 있는지 검사하는 함수임
+bool IsInsideZone(glm::vec3 pos, TriggerZone zone)
+{
+    return  pos.x >= zone.minX && pos.x <= zone.maxX &&
+        pos.y >= zone.minY && pos.y <= zone.maxY &&
+        pos.z >= zone.minZ && pos.z <= zone.maxZ;
+}
+
+// 유저가 문 영역을 넘어서 정말로 건물 안으로 들어왔는지 검사하는 함수임
+bool CrossedLine(float prev, float curr, float line)  // prev는 이전 위치, curr는 현재 위치
+{
+    return (prev < line && curr >= line) ||
+        (prev >= line && curr < line);
+}
+
+// 이전 또는 현재 위치 둘 중 하나라도 유저가 문 영역 안에 있었는지 검사하는 함수
+bool NearDoorCrossed(glm::vec3 prevPos, glm::vec3 currPos, TriggerZone door, char axis, float line)
+{
+    // 이전 위치 혹은 현재 위치가 영역 안인가?
+    bool nearDoor = IsInsideZone(prevPos, door) || IsInsideZone(currPos, door);
+
+    if (!nearDoor)
+        return false;  // 아니라면 검사 안함
+
+    // 문의 line이 x축 기준인 경우
+    if (axis == 'x')
+        return CrossedLine(prevPos.x, currPos.x, line);
+
+    // 문의 line이 z축 기준인 경우
+    if (axis == 'z')
+        return CrossedLine(prevPos.z, currPos.z, line);
+
+    return false;  // 건물 안쪽으로 간게 아니면 false
+}
+
+// OpenAL (사운드)를 초기화 하는 함수
+bool InitOpenAL()
+{
+    audioDevice = alcOpenDevice(nullptr);  // 컴퓨터의 실제 오디오 장치에 연결 (윈도우 기본 스피커 사용)
+    if (!audioDevice)
+    {
+        std::cout << "OpenAL device failed\n";
+        return false;
+    }
+
+    audioContext = alcCreateContext(audioDevice, nullptr);  // OpenAL 작업공간 생성
+    if (!audioContext)
+    {
+        std::cout << "OpenAL context failed\n";
+        return false;
+    }
+
+    alcMakeContextCurrent(audioContext);  // 앞으로 OpenAL 명령은 audiContext에 적용한다는 의미
+    return true;  // OpenAL 준비 완료
+}
+
+// OpenAL을 종료하는 함수
+void DeleteSound(Sound& sound)
+{
+    if (sound.source != 0)
+    {
+        alDeleteSources(1, &sound.source);
+        sound.source = 0;
+    }
+
+    if (sound.buffer != 0)
+    {
+        alDeleteBuffers(1, &sound.buffer);
+        sound.buffer = 0;
+    }
+}
+
+void ShutdownOpenAL()
+{
+    DeleteSound(bgmSound);
+    DeleteSound(heartBeatSound);
+    DeleteSound(metalClangSound);
+    DeleteSound(flashLightSound);
+    // 여러 발소리 사운드 삭제
+    for (Sound& s : footstepSounds)
+    {
+        DeleteSound(s);
+    }
+    footstepSounds.clear();
+    // 여러 전등 사운드 삭제
+    for (Sound& s : electronicSounds)
+    {
+        DeleteSound(s);
+    }
+    electronicSounds.clear();
+
+    alcMakeContextCurrent(nullptr);
+
+    if (audioContext)
+    {
+        alcDestroyContext(audioContext);
+        audioContext = nullptr;
+    }
+
+    if (audioDevice)
+    {
+        alcCloseDevice(audioDevice);
+        audioDevice = nullptr;
+    }
+}
+
+// .wav 파일을 읽어서 OpenAL buffer로 변환하는 함수 (OpenAL은 오직 재생 역할만 담당함)
+ALuint LoadWav(const char* filename)
+{
+    unsigned int channels;
+    unsigned int sampleRate;
+    drwav_uint64 totalPCMFrameCount;
+
+    int16_t* sampleData = drwav_open_file_and_read_pcm_frames_s16(
+        filename,
+        &channels,
+        &sampleRate,
+        &totalPCMFrameCount,
+        nullptr
+    );
+
+    if (!sampleData)
+    {
+        std::cout << "Failed to load wav\n";
+        return 0;
+    }
+
+    ALenum format =
+        (channels == 1)
+        ? AL_FORMAT_MONO16
+        : AL_FORMAT_STEREO16;
+
+    ALuint buffer;
+
+    alGenBuffers(1, &buffer);
+
+    alBufferData(
+        buffer,
+        format,
+        sampleData,
+        totalPCMFrameCount * channels * sizeof(int16_t),
+        sampleRate
+    );
+
+    drwav_free(sampleData, nullptr);
+
+    std::cout << filename
+        << " channels: " << channels
+        << ", sampleRate: " << sampleRate
+        << std::endl;
+
+    return buffer;
+}
+
+// 사운드 객체를 생성함
+Sound CreateSound(
+    const char* filePath,  // 재생할 wav 파일 경로
+    float volume,  // 소리 크기
+    bool loop,  // 반복 재생 여부
+    glm::vec3 position,  // 소리 위치
+    bool is3D  // true는 위치 기반 소리, false는 일반 효과음 재생
+)
+{
+    Sound sound;
+
+    sound.buffer = LoadWav(filePath);
+
+    if (sound.buffer == 0)
+    {
+        std::cout << "Sound load failed: " << filePath << std::endl;
+        return sound;
+    }
+
+    alGenSources(1, &sound.source);
+
+    alSourcei(sound.source, AL_BUFFER, sound.buffer);
+    alSourcef(sound.source, AL_GAIN, volume);
+    alSourcei(sound.source, AL_LOOPING, loop ? AL_TRUE : AL_FALSE);
+
+    // 3D 사운드면 월드 좌표를 적용
+    if (is3D)
+    {
+        alSource3f(
+            sound.source,
+            AL_POSITION,
+            position.x,
+            position.y,
+            position.z
+        );
+
+        // 3d 사운드 거리 감쇠
+        alSourcef(sound.source, AL_REFERENCE_DISTANCE, 3.0f);  // 가까이 왔을 때만 크게 들림
+        alSourcef(sound.source, AL_MAX_DISTANCE, 30.0f);  // 이 거리가 되면 거의 안들림
+        alSourcef(sound.source, AL_ROLLOFF_FACTOR, 15.0f);  // 거리 감쇠를 강하게
+        alSourcef(sound.source, AL_MIN_GAIN, 0.0f);   // 멀어지면 완전 무음 허용
+    }
+
+    return sound;
+}
+
+// metal clang을 재생하기 위한 랜덤 위치를 계산하는 함수
+glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos)
+{
+    // 유저로부터 얼마나 떨어질지 랜덤 거리
+    float distance = 4.0f + static_cast<float>(rand()) / RAND_MAX * 4.0f;
+
+    // 수정: 0~360도 랜덤 방향
+    float angle = static_cast<float>(rand()) / RAND_MAX * glm::two_pi<float>();
+
+    // 원형으로 랜덤 위치 계산
+    float x = playerPos.x + cos(angle) * distance;
+    float z = playerPos.z + sin(angle) * distance;
+
+    return glm::vec3(x, playerPos.y, z);  // 위치 반환
 }
