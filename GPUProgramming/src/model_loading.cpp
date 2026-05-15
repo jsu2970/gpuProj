@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -402,13 +402,19 @@ int main()
         // render
         // ------
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+        glEnable(GL_DEPTH_TEST);
 
-        glClearColor(0.25f, 0.05f, 0.05f, 1.0f);
+        // 안개 색상 정의 및 화면 지우기
+        glm::vec3 fogColor = glm::vec3(0.02f, 0.04f, 0.04f);
+        glClearColor(fogColor.r, fogColor.g, fogColor.b, 1.0f); // 배경색을 안개색과 일치
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
-        // be sure to activate shader when setting uniforms/drawing objects
+
+        // 셰이더 활성화
         lightingShader.use();
+
+        // 모든 유니폼 변수 설정
+        lightingShader.setVec3("fogColor", fogColor);
+        lightingShader.setFloat("fogDensity", 0.15f);
         lightingShader.setVec3("light.position", camera.Position);
         lightingShader.setVec3("light.direction", camera.Front);
         lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(8.0f)));
