@@ -1,4 +1,4 @@
-﻿#version 330 core
+#version 330 core
 out vec4 FragColor;
 
 uniform float shininess;
@@ -45,6 +45,8 @@ in vec2 TexCoords;
   
 uniform vec3 viewPos;
 uniform bool isEmissive;  // 발광 여부
+uniform vec3 fogColor;    
+uniform float fogDensity;
 
 void main()
 {
@@ -112,6 +114,22 @@ void main()
         result += eerieColor * 0.6;
     }
 
+    // ======================
+    // 안개(Fog) 계산 추가
+    // ======================
+    float fogDist = length(viewPos - FragPos); // 카메라와 픽셀 사이의 거리 계산 [cite: 10, 14]
+    
+    // 지수 안개 공식: f = e^(- (distance * density)^2)
+    float fogOffset = 2.0; // 2.0 유닛까지는 안개가 끼지 않음(안개 가시거리 조정)
+    float adjustedDist = max(fogDist - fogOffset, 0.0);
+    float fogFactor = exp(-pow(adjustedDist * fogDensity, 2.0));
+    fogFactor = clamp(fogFactor, 0.0, 1.0);
+
+    // 최종 결과물과 안개 색상을 혼합
+    // fogFactor가 1에 가까우면 원래 색상, 0에 가까우면 안개 색상이 보임
+    result = mix(fogColor, result, fogFactor);
+
     FragColor = vec4(result, 1.0);
     //FragColor = texture(texture_diffuse1, TexCoords);
+
 } 
