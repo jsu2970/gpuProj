@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -402,13 +402,19 @@ int main()
         // render
         // ------
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-        glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+        glEnable(GL_DEPTH_TEST);
 
-        glClearColor(0.25f, 0.05f, 0.05f, 1.0f);
+        // 안개 색상 정의 및 화면 지우기
+        glm::vec3 fogColor = glm::vec3(0.02f, 0.04f, 0.04f);
+        glClearColor(fogColor.r, fogColor.g, fogColor.b, 1.0f); // 배경색을 안개색과 일치
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
-        // be sure to activate shader when setting uniforms/drawing objects
+
+        // 셰이더 활성화
         lightingShader.use();
+
+        // 모든 유니폼 변수 설정
+        lightingShader.setVec3("fogColor", fogColor);
+        lightingShader.setFloat("fogDensity", 0.15f);
         lightingShader.setVec3("light.position", camera.Position);
         lightingShader.setVec3("light.direction", camera.Front);
         lightingShader.setFloat("light.cutOff", glm::cos(glm::radians(8.0f)));
@@ -631,6 +637,20 @@ void processInput(GLFWwindow *window)
 
     if (!CheckWallCollision(tryZ))
         camera.Position = tryZ;  // 여기까지의 결과가 합쳐져서 x, z 둘 다 움직였다면 처음 목표 이동 위치인 desiredPos와 같아짐
+
+    // 스페이스바를 눌렀을 때 점프 처리
+    // 조건: 스페이스바가 눌려 있어야 하고, 캐릭터가 바닥에 닿아 있는 상태(isGrounded)여야 함
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && isGrounded)
+    {
+        // 점프 힘 설정 (숫자가 클수록 더 높이 점프함)
+        float jumpHeight = 3.5f;
+
+        // 위 방향으로 속도를 즉시 부여
+        verticalVelocity = jumpHeight;
+
+        // 점프를 시작하면 더 이상 바닥 상태가 아님
+        isGrounded = false;
+    }
 
     // 중력 계산
     // 현재 카메라 위치 아래로 ray를 쏴서 지금 발 밑에 있는 바닥 삼각형 높이를 구함
