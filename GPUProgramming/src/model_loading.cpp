@@ -638,6 +638,20 @@ void processInput(GLFWwindow *window)
     if (!CheckWallCollision(tryZ))
         camera.Position = tryZ;  // 여기까지의 결과가 합쳐져서 x, z 둘 다 움직였다면 처음 목표 이동 위치인 desiredPos와 같아짐
 
+    // 스페이스바를 눌렀을 때 점프 처리
+    // 조건: 스페이스바가 눌려 있어야 하고, 캐릭터가 바닥에 닿아 있는 상태(isGrounded)여야 함
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && isGrounded)
+    {
+        // 점프 힘 설정 (숫자가 클수록 더 높이 점프함)
+        float jumpHeight = 3.5f;
+
+        // 위 방향으로 속도를 즉시 부여
+        verticalVelocity = jumpHeight;
+
+        // 점프를 시작하면 더 이상 바닥 상태가 아님
+        isGrounded = false;
+    }
+
     // 중력 계산
     // 현재 카메라 위치 아래로 ray를 쏴서 지금 발 밑에 있는 바닥 삼각형 높이를 구함
     float ground = GetGroundY(camera.Position);  
