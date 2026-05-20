@@ -131,6 +131,21 @@ float clangTimer = 0.0f;              // metal clang 타이머
 float nextClangTime = 20.0f;          // 시작 후 첫 소리는 20초 뒤
 bool firstClangPlayed = false;        // 첫 clang 여부
 
+// cube shadow map 설정
+const unsigned int SHADOW_WIDTH = 1024;
+const unsigned int SHADOW_HEIGHT = 1024;
+
+// 2개의 전등까지 쉐도우 매핑을 사용함
+const int MAX_SHADOW_LAMPS = 2;
+
+unsigned int depthMapFBO[MAX_SHADOW_LAMPS];
+unsigned int depthCubemap[MAX_SHADOW_LAMPS];
+int shadowLampIndices[MAX_SHADOW_LAMPS] = { -1, -1 };
+glm::vec3 shadowLightPositions[MAX_SHADOW_LAMPS];
+
+float near_plane = 0.1f;
+float far_plane = 20.0f;  // 전등 그림자가 보일 최대 거리
+
 int main()
 {
     // glfw: initialize and configure
@@ -176,6 +191,64 @@ int main()
     // -------------------------
 
     Shader lightingShader("shader/5.4.light_casters.vs", "shader/5.4.light_casters.fs");
+
+    // point light cube shadow map용 depth shader
+    Shader depthShader(
+        "shader/point_shadow_depth.vs",
+        "shader/point_shadow_depth.fs"
+    );
+
+    // ===============================
+    // Point Light Shadow Cubemap 생성
+    // ===============================
+
+    // depthMapFBO는 shadow map 전용 framebuffer로 그림자용 임시 랜더링 공간을 만듦
+    glGenFramebuffers(MAX_SHADOW_LAMPS, depthMapFBO);
+    glGenTextures(MAX_SHADOW_LAMPS, depthCubemap);
+
+    for (int s = 0; s < MAX_SHADOW_LAMPS; s++)
+    {
+        glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap[s]);
+
+        for (unsigned int i = 0; i < 6; ++i)
+        {
+            glTexImage2D(
+                GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,  // 6개의 면을 대상으로 함
+                0,
+                GL_DEPTH_COMPONENT,  // 색 RGB 저장하지 않고 depth값만 저장함 (픽셀이 빛으로부터 얼마나 가까운지 판단함)
+                SHADOW_WIDTH,  // 쉐도우 맵의 해상도로 너무 낮으면 그림자에 계단현상이 발생함
+                SHADOW_HEIGHT,
+                0,
+                GL_DEPTH_COMPONENT,
+                GL_FLOAT,
+                NULL
+            );
+        }
+
+        // shadow map은 색이 아니라 depth만 필요함
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        // cubemap 경계에서 이상한 선이 생기지 않도록 clamp 설정
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+        // framebuffer에 depth cubemap 연결
+        glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO[s]);
+        glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap[s], 0);
+
+        // 색상 버퍼는 사용하지 않음
+        glDrawBuffer(GL_NONE);
+        glReadBuffer(GL_NONE);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            std::cout << "ERROR::SHADOW:: Depth cubemap framebuffer is not complete!" << std::endl;
+        }
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // load models
     // -----------
@@ -401,6 +474,119 @@ int main()
 
         // render
         // ------
+
+        // 카스 맵 그리기
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
+
+        // 전등의 위치를 가져옴
+        vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
+        int count = std::min((int)lampPositions.size(), 64);
+
+        // 플레이어와 가장 가까운 전등을 찾음. shadow map은 전등 2개만 생성 (최적화)
+        shadowLampIndices[0] = -1;
+        shadowLampIndices[1] = -1;
+
+        float minDist1 = FLT_MAX;  // 현재까지 발견한, 전등과 가장 가까운 거리
+        float minDist2 = FLT_MAX;
+
+        for (int i = 0; i < count; i++)
+        {
+            // 플레이어와 전등 거리 계산
+            float dist = glm::length(camera.Position - lampPositions[i]);
+
+            // 더 가까운 전등 발견 시 갱신
+            if (dist < minDist1)
+            {
+                minDist2 = minDist1;
+                shadowLampIndices[1] = shadowLampIndices[0];
+
+                minDist1 = dist;
+                shadowLampIndices[0] = i;
+            }
+            else if (dist < minDist2)
+            {
+                minDist2 = dist;
+                shadowLampIndices[1] = i;
+            }
+        }
+
+        // shadow map 생성에 사용할 전등 위치
+        for (int s = 0; s < MAX_SHADOW_LAMPS; s++)
+        {
+            if (shadowLampIndices[s] != -1)  // 가까운 전등을 발견한 경우
+                shadowLightPositions[s] = lampPositions[shadowLampIndices[s]];  // 찾은 전등 위치를 넣음
+            else
+                shadowLightPositions[s] = glm::vec3(0.0f);  // 발견하지 못한 경우
+        }
+
+        // 가장 가까운 전등 2개를 기준으로 depth cubemap을 렌더링함
+        for (int s = 0; s < MAX_SHADOW_LAMPS; s++)
+        {
+            if (shadowLampIndices[s] == -1)
+                continue;
+
+            glm::vec3 shadowLightPos = shadowLightPositions[s];
+
+            float aspect = (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT;  // 화면 비율 값으로 cube face는 정사각형임
+
+            glm::mat4 shadowProj = glm::perspective(
+                glm::radians(90.0f),  // 한 면이 담당해야 할 범위는 90도임 (앞, 뒤, 오른쪽, 왼쪽 = 360도)
+                aspect,
+                near_plane,  // 이 값보다 가까운 물체는 그림자를 그리지 않음
+                far_plane  // 이 값보다 먼 물체는 그림자를 그리지 않음
+            );
+
+            // point light는 6방향을 봐야 하므로 viewProjection 행렬 6개 생성
+            std::vector<glm::mat4> shadowTransforms;
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,   // 전등 위치
+                shadowLightPos + glm::vec3(1, 0, 0),  // 빛나는 물체 기준 +x축
+                glm::vec3(0, -1, 0)));  // 해당 cube에 맞는 up벡터
+            shadowTransforms.push_back(shadowProj * glm::lookAt(shadowLightPos, shadowLightPos + glm::vec3(-1, 0, 0), glm::vec3(0, -1, 0)));
+            shadowTransforms.push_back(shadowProj * glm::lookAt(shadowLightPos, shadowLightPos + glm::vec3(0, 1, 0), glm::vec3(0, 0, 1)));
+            shadowTransforms.push_back(shadowProj * glm::lookAt(shadowLightPos, shadowLightPos + glm::vec3(0, -1, 0), glm::vec3(0, 0, -1)));
+            shadowTransforms.push_back(shadowProj * glm::lookAt(shadowLightPos, shadowLightPos + glm::vec3(0, 0, 1), glm::vec3(0, -1, 0)));
+            shadowTransforms.push_back(shadowProj * glm::lookAt(shadowLightPos, shadowLightPos + glm::vec3(0, 0, -1), glm::vec3(0, -1, 0)));
+
+            glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);  // 쉐도우 매핑 기준으로 변경
+            glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO[s]);
+
+            glClearDepth(1.0f);
+            glDepthFunc(GL_LESS);
+            glDepthMask(GL_TRUE);
+            glEnable(GL_DEPTH_TEST);
+            glDisable(GL_CULL_FACE);
+
+            depthShader.use();
+            depthShader.setFloat("far_plane", far_plane);
+            depthShader.setVec3("lightPos", shadowLightPos);
+
+            // cubemap 6면을 반복해서 랜더함
+            for (unsigned int face = 0; face < 6; face++)
+            {
+                glFramebufferTexture2D(
+                    GL_FRAMEBUFFER,
+                    GL_DEPTH_ATTACHMENT,
+                    GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+                    depthCubemap[s],
+                    0
+                );
+
+                glClear(GL_DEPTH_BUFFER_BIT);
+
+                depthShader.setMat4("shadowMatrix", shadowTransforms[face]);
+
+                // 맵 depth 기록
+                ourModel.Draw(depthShader, model);
+            }
+        }
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
         glEnable(GL_DEPTH_TEST);
 
@@ -411,6 +597,24 @@ int main()
 
         // 셰이더 활성화
         lightingShader.use();
+
+        // shadow cubemap을 texture unit에 연결
+        lightingShader.setInt("depthMaps[0]", 30);
+        lightingShader.setInt("depthMaps[1]", 31);
+
+        lightingShader.setFloat("far_plane", far_plane);
+
+        lightingShader.setInt("shadowLampIndices[0]", shadowLampIndices[0]);
+        lightingShader.setInt("shadowLampIndices[1]", shadowLampIndices[1]);
+
+        lightingShader.setVec3("shadowLightPositions[0]", shadowLightPositions[0]);
+        lightingShader.setVec3("shadowLightPositions[1]", shadowLightPositions[1]);
+
+        glActiveTexture(GL_TEXTURE30);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap[0]);
+
+        glActiveTexture(GL_TEXTURE31);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap[1]);
 
         // 모든 유니폼 변수 설정
         lightingShader.setVec3("fogColor", fogColor);
@@ -447,15 +651,6 @@ int main()
         glm::mat4 view = camera.GetViewMatrix();
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
-
-        // 카스 맵 그리기
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
-
-        // 전등의 위치를 가져옴
-        vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
-        int count = std::min((int)lampPositions.size(), 64);
 
         lightingShader.setInt("lampLightCount", count);  // 사용하는 전등 개수를 넣음
 
@@ -643,7 +838,7 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && isGrounded)
     {
         // 점프 힘 설정 (숫자가 클수록 더 높이 점프함)
-        float jumpHeight = 3.5f;
+        float jumpHeight = 2.5f;
 
         // 위 방향으로 속도를 즉시 부여
         verticalVelocity = jumpHeight;

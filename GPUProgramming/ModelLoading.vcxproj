@@ -25,6 +25,9 @@
   <ItemGroup>
     <None Include="shader\5.4.light_casters.fs" />
     <None Include="shader\5.4.light_casters.vs" />
+    <None Include="shader\point_shadow_depth.fs" />
+    <None Include="shader\point_shadow_depth.gs" />
+    <None Include="shader\point_shadow_depth.vs" />
     <None Include="shader\screen.fs" />
     <None Include="shader\screen.vs" />
   </ItemGroup>
