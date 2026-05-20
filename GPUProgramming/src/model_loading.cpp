@@ -52,15 +52,6 @@ unsigned int collisionShadowVAO = 0;
 unsigned int collisionShadowVBO = 0;
 int collisionShadowVertexCount = 0;
 
-vector<glm::vec3> lampPositions = {
-    glm::vec3(-13.2192f, -2.02f, -11.533f),
-    glm::vec3(-11.4779f, -2.02f, 3.48009f),
-    glm::vec3(-2.84282f, -2.02f, 2.64737f),
-    glm::vec3(1.56382f, -2.02f, 0.556459f),
-    glm::vec3(7.03281f, -1.94f, -4.84839f),
-    glm::vec3(10.2782f, -2.42f, -6.12697f)
-};
-
 // settings
 const unsigned int SCR_WIDTH = 1600;
 const unsigned int SCR_HEIGHT = 900;
@@ -154,7 +145,7 @@ unsigned int depthMapFBO;
 unsigned int depthCubemap;
 
 float near_plane = 0.1f;
-float far_plane = 40.0f;  // 전등 그림자가 보일 최대 거리
+float far_plane = 20.0f;  // 전등 그림자가 보일 최대 거리
 
 int main()
 {
@@ -494,7 +485,7 @@ int main()
         model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
 
         // 전등의 위치를 가져옴
-        //vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
+        vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
         int count = std::min((int)lampPositions.size(), 64);
 
         // 플레이어와 가장 가까운 전등 찾음. shadow map은 이 전등 하나만 생성 (최적화)
@@ -575,40 +566,43 @@ int main()
                 glm::vec3(0.0f, -1.0f, 0.0f)
             ));
 
-            // shadow map 크기로 viewport 변경함 (화면 해상도가 아님)
             glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
-            glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);  // 미리 정의한 프레임 버퍼 연결
+            glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
 
             glClearDepth(1.0f);
             glDepthFunc(GL_LESS);
             glDepthMask(GL_TRUE);
             glEnable(GL_DEPTH_TEST);
-            glClear(GL_DEPTH_BUFFER_BIT);  // 이전 프레임의 shadow depth를 제거함
+            glDisable(GL_CULL_FACE);
 
-            glDisable(GL_CULL_FACE);   // shadow map 만들 때는 양면 다 depth에 찍히게 함
-
-            // 깊이 쉐이더를 사용하여 앞으로 그리는 것은 모니터에 그리는 것이 아니라 depth cubemap에 그리는 것임
             depthShader.use();
+            depthShader.setFloat("far_plane", far_plane);
+            depthShader.setVec3("lightPos", shadowLightPos);
 
-            // gs에서 사용할 6방향의 viewProjection matrix를 전달함
-            for (unsigned int i = 0; i < 6; ++i)
+            for (unsigned int face = 0; face < 6; face++)
             {
-                depthShader.setMat4("shadowMatrices[" + std::to_string(i) + "]", shadowTransforms[i]);
+                glFramebufferTexture2D(
+                    GL_FRAMEBUFFER,
+                    GL_DEPTH_ATTACHMENT,
+                    GL_TEXTURE_CUBE_MAP_POSITIVE_X + face,
+                    depthCubemap,
+                    0
+                );
+
+                glClear(GL_DEPTH_BUFFER_BIT);
+
+                depthShader.setMat4("shadowMatrix", shadowTransforms[face]);
+
+                // 맵 depth 기록
+                depthShader.setMat4("model", model);
+                ourModel.Draw(depthShader, model);
+
+                // collision blocker도 기록
+                depthShader.setMat4("model", glm::mat4(1.0f));
+                DrawCollisionShadowBlockers();
             }
 
-            depthShader.setFloat("far_plane", far_plane);  // depth를 정규화하기 위한 최대 거리를 줌
-            depthShader.setVec3("lightPos", shadowLightPos);  // 전등 위치
-
-            // 카스 맵에 장면의 깊이만 그림
-            ourModel.Draw(depthShader, model);
-
-            // collision 삼각형도 shadow map에 그림
-            depthShader.setMat4("model", glm::mat4(1.0f));
-            DrawCollisionShadowBlockers();
-
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);  // 기본 프레임 버퍼 사용
-
-            // 원래 화면 크기로 viewport 복구
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         }
 

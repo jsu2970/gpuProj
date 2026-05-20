@@ -153,20 +153,7 @@ void main()
         {
             float shadow = ShadowCalculation(FragPos);
 
-            //lampDiffuse *= (1.0 - shadow);
-
-            vec3 fragToLight = FragPos - shadowLightPos;
-
-            float rawDepth = texture(depthMap, fragToLight).r;
-            float closestDepth = rawDepth * far_plane;
-            float currentDepth = length(fragToLight);
-
-            if (rawDepth > 0.99)
-                lampDiffuse = vec3(1.0, 0.0, 1.0); // depth 없음
-           else if (currentDepth > closestDepth)
-                lampDiffuse = vec3(1.0, 0.0, 0.0); // 그림자 가능
-            else
-                lampDiffuse = vec3(0.0, 0.0, 1.0); // current가 더 가까움
+            lampDiffuse *= (1.0 - shadow);
         }
 
         result += lampDiffuse;
@@ -178,7 +165,7 @@ void main()
         //result += emissionColor * 3.0;
 
         vec3 eerieColor = vec3(0.25, 1.0, 0.75);
-        //result += eerieColor * 0.6;
+        result += eerieColor * 0.6;
     }
 
     // ======================

@@ -35,13 +35,13 @@
     <None Include="shader\screen.vs">
       <Filter>source files</Filter>
     </None>
-    <None Include="point_shadow_depth.gs">
+    <None Include="shader\point_shadow_depth.fs">
       <Filter>source files</Filter>
     </None>
-    <None Include="point_shadow_depth.vs">
+    <None Include="shader\point_shadow_depth.gs">
       <Filter>source files</Filter>
     </None>
-    <None Include="point_shadow_depth.fs">
+    <None Include="shader\point_shadow_depth.vs">
       <Filter>source files</Filter>
     </None>
   </ItemGroup>
