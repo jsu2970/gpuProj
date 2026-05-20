@@ -45,6 +45,21 @@ void ShutdownOpenAL();
 ALuint LoadWav(const char* filename);
 Sound CreateSound(const char* filePath, float volume, bool loop, glm::vec3 position, bool is3D);
 glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos);
+void BuildCollisionShadowBlockers();
+void DrawCollisionShadowBlockers();
+
+unsigned int collisionShadowVAO = 0;
+unsigned int collisionShadowVBO = 0;
+int collisionShadowVertexCount = 0;
+
+vector<glm::vec3> lampPositions = {
+    glm::vec3(-13.2192f, -2.02f, -11.533f),
+    glm::vec3(-11.4779f, -2.02f, 3.48009f),
+    glm::vec3(-2.84282f, -2.02f, 2.64737f),
+    glm::vec3(1.56382f, -2.02f, 0.556459f),
+    glm::vec3(7.03281f, -1.94f, -4.84839f),
+    glm::vec3(10.2782f, -2.42f, -6.12697f)
+};
 
 // settings
 const unsigned int SCR_WIDTH = 1600;
@@ -131,6 +146,16 @@ float clangTimer = 0.0f;              // metal clang 타이머
 float nextClangTime = 20.0f;          // 시작 후 첫 소리는 20초 뒤
 bool firstClangPlayed = false;        // 첫 clang 여부
 
+// cube shadow map 설정
+const unsigned int SHADOW_WIDTH = 1024;
+const unsigned int SHADOW_HEIGHT = 1024;
+
+unsigned int depthMapFBO;
+unsigned int depthCubemap;
+
+float near_plane = 0.1f;
+float far_plane = 40.0f;  // 전등 그림자가 보일 최대 거리
+
 int main()
 {
     // glfw: initialize and configure
@@ -177,6 +202,65 @@ int main()
 
     Shader lightingShader("shader/5.4.light_casters.vs", "shader/5.4.light_casters.fs");
 
+    // point light cube shadow map용 depth shader
+    Shader depthShader(
+        "shader/point_shadow_depth.vs",
+        "shader/point_shadow_depth.fs"
+        //"shader/point_shadow_depth.gs"
+    );
+
+    // ===============================
+    // Point Light Shadow Cubemap 생성
+    // ===============================
+
+    // depthMapFBO는 shadow map 전용 framebuffer로 그림자용 임시 랜더링 공간을 만듦
+    glGenFramebuffers(1, &depthMapFBO);
+
+    // depthCubemap은 전등 기준 6방향 깊이 정보를 저장하는 cubemap
+    glGenTextures(1, &depthCubemap);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
+
+    // cubemap은 총 6개의 면을 가짐
+    // 각 면에 depth texture를 할당함
+    for (unsigned int i = 0; i < 6; ++i)
+    {
+        glTexImage2D(  
+            GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,  // 6개의 면을 대상으로 함
+            0,
+            GL_DEPTH_COMPONENT,  // 색 RGB 저장하지 않고 depth값만 저장함 (픽셀이 빛으로부터 얼마나 가까운지 판단함)
+            SHADOW_WIDTH,  // 쉐도우 맵의 해상도로 너무 낮으면 그림자에 계단현상이 발생함
+            SHADOW_HEIGHT,
+            0,
+            GL_DEPTH_COMPONENT,
+            GL_FLOAT,
+            NULL
+        );
+    }
+
+    // shadow map은 색이 아니라 depth만 필요함
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    // cubemap 경계에서 이상한 선이 생기지 않도록 clamp 설정
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+    // framebuffer에 depth cubemap 연결
+    glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthCubemap, 0);
+
+    // 색상 버퍼는 사용하지 않음
+    glDrawBuffer(GL_NONE);
+    glReadBuffer(GL_NONE);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+    {
+        std::cout << "ERROR::SHADOW:: Depth cubemap framebuffer is not complete!" << std::endl;
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
     // load models
     // -----------
     Model ourModel("resources/counter-strike_italy_3d/scene.gltf");  // 맵 로드
@@ -185,6 +269,8 @@ int main()
     mapMatrix = glm::scale(mapMatrix,glm::vec3(0.01f));  // 맵의 크기가 0.01이므로 스케일링 함
     collisionTriangles = ourModel.GetCollisionTriangles(mapMatrix);  // 충돌 삼각형들을 모두 계산함
     cout << "collision tris: " << collisionTriangles.size() << endl;
+
+    BuildCollisionShadowBlockers();
 
     Model flashlightModel("resources/flash_light/scene.gltf");  // 손전등 로드
 
@@ -401,6 +487,131 @@ int main()
 
         // render
         // ------
+
+        // 카스 맵 그리기
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
+
+        // 전등의 위치를 가져옴
+        //vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
+        int count = std::min((int)lampPositions.size(), 64);
+
+        // 플레이어와 가장 가까운 전등 찾음. shadow map은 이 전등 하나만 생성 (최적화)
+        int shadowLampIndex = -1;
+
+        float minDist = FLT_MAX;  // 현재까지 발견한, 전등과 가장 가까운 거리
+
+        for (int i = 0; i < count; i++)
+        {
+            // 플레이어와 전등 거리 계산
+            float dist = glm::length(camera.Position - lampPositions[i]);
+
+            // 더 가까운 전등 발견 시 갱신
+            if (dist < minDist)
+            {
+                minDist = dist;
+                shadowLampIndex = i;
+            }
+        }
+
+        // shadow map 생성에 사용할 전등 위치
+        glm::vec3 shadowLightPos = glm::vec3(0.0f);
+
+        if (shadowLampIndex != -1)  // 가까운 전등을 발견한 경우
+        {
+            shadowLightPos = lampPositions[shadowLampIndex];  // 찾은 전등 위치를 넣음
+        }
+
+        // 가장 가까운 전등 기준으로 depth cubemap을 렌더링함
+        if (shadowLampIndex != -1)
+        {
+            float aspect = (float)SHADOW_WIDTH / (float)SHADOW_HEIGHT;  // 화면 비율 값으로 cube face는 정사각형임
+
+            // 전등을 카메라처럼 만들 때, 그 카메라의 시야각을 정함
+            glm::mat4 shadowProj = glm::perspective(
+                glm::radians(90.0f),  // 한 면이 담당해야 할 범위는 90도임 (앞, 뒤, 오른쪽, 왼쪽 = 360도)
+                aspect,
+                near_plane,  // 이 값보다 가까운 물체는 그림자를 그리지 않음
+                far_plane  // 이 값보다 먼 물체는 그림자를 그리지 않음
+            );
+
+            // point light는 6방향을 봐야 하므로 viewProjection 행렬 6개 생성
+            std::vector<glm::mat4> shadowTransforms;
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,  // 전등 위치
+                shadowLightPos + glm::vec3(1.0f, 0.0f, 0.0f),  // 빛나는 물체 기준 +x축
+                glm::vec3(0.0f, -1.0f, 0.0f)  // 해당 cube에 맞는 up벡터
+            ));
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,
+                shadowLightPos + glm::vec3(-1.0f, 0.0f, 0.0f),  // -x축
+                glm::vec3(0.0f, -1.0f, 0.0f)
+            ));
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,
+                shadowLightPos + glm::vec3(0.0f, 1.0f, 0.0f),  // +y축
+                glm::vec3(0.0f, 0.0f, 1.0f)
+            ));
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,
+                shadowLightPos + glm::vec3(0.0f, -1.0f, 0.0f),  // -y축
+                glm::vec3(0.0f, 0.0f, -1.0f)
+            ));
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,
+                shadowLightPos + glm::vec3(0.0f, 0.0f, 1.0f),  // +z축
+                glm::vec3(0.0f, -1.0f, 0.0f)
+            ));
+
+            shadowTransforms.push_back(shadowProj * glm::lookAt(
+                shadowLightPos,
+                shadowLightPos + glm::vec3(0.0f, 0.0f, -1.0f),  // -z축
+                glm::vec3(0.0f, -1.0f, 0.0f)
+            ));
+
+            // shadow map 크기로 viewport 변경함 (화면 해상도가 아님)
+            glViewport(0, 0, SHADOW_WIDTH, SHADOW_HEIGHT);
+            glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);  // 미리 정의한 프레임 버퍼 연결
+
+            glClearDepth(1.0f);
+            glDepthFunc(GL_LESS);
+            glDepthMask(GL_TRUE);
+            glEnable(GL_DEPTH_TEST);
+            glClear(GL_DEPTH_BUFFER_BIT);  // 이전 프레임의 shadow depth를 제거함
+
+            glDisable(GL_CULL_FACE);   // shadow map 만들 때는 양면 다 depth에 찍히게 함
+
+            // 깊이 쉐이더를 사용하여 앞으로 그리는 것은 모니터에 그리는 것이 아니라 depth cubemap에 그리는 것임
+            depthShader.use();
+
+            // gs에서 사용할 6방향의 viewProjection matrix를 전달함
+            for (unsigned int i = 0; i < 6; ++i)
+            {
+                depthShader.setMat4("shadowMatrices[" + std::to_string(i) + "]", shadowTransforms[i]);
+            }
+
+            depthShader.setFloat("far_plane", far_plane);  // depth를 정규화하기 위한 최대 거리를 줌
+            depthShader.setVec3("lightPos", shadowLightPos);  // 전등 위치
+
+            // 카스 맵에 장면의 깊이만 그림
+            ourModel.Draw(depthShader, model);
+
+            // collision 삼각형도 shadow map에 그림
+            depthShader.setMat4("model", glm::mat4(1.0f));
+            DrawCollisionShadowBlockers();
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);  // 기본 프레임 버퍼 사용
+
+            // 원래 화면 크기로 viewport 복구
+            glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
+        }
+
         glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
         glEnable(GL_DEPTH_TEST);
 
@@ -411,6 +622,15 @@ int main()
 
         // 셰이더 활성화
         lightingShader.use();
+
+        // shadow cubemap은 texture unit 31번에 연결
+        lightingShader.setInt("depthMap", 31);
+        lightingShader.setFloat("far_plane", far_plane);
+        lightingShader.setVec3("shadowLightPos", shadowLightPos);
+        lightingShader.setInt("shadowLampIndex", shadowLampIndex);
+
+        glActiveTexture(GL_TEXTURE31);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, depthCubemap);
 
         // 모든 유니폼 변수 설정
         lightingShader.setVec3("fogColor", fogColor);
@@ -448,15 +668,6 @@ int main()
         lightingShader.setMat4("projection", projection);
         lightingShader.setMat4("view", view);
 
-        // 카스 맵 그리기
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));	// it's a bit too big for our scene, so scale it down
-
-        // 전등의 위치를 가져옴
-        vector<glm::vec3> lampPositions = ourModel.GetLightPositionsFromMaterialParts("material_32", model);
-        int count = std::min((int)lampPositions.size(), 64);
-
         lightingShader.setInt("lampLightCount", count);  // 사용하는 전등 개수를 넣음
 
         // 쉐이더의 전등 위치값과 빛 처리 상수값 초기화
@@ -464,8 +675,17 @@ int main()
         {
             std::string idx = std::to_string(i);
 
-            lightingShader.setVec3("lampLights[" + idx + "].position", lampPositions[i]);
-            lightingShader.setVec3("lampLights[" + idx + "].ambient", 0.002f, 0.006f, 0.005f);
+            //lightingShader.setVec3("lampLights[" + idx + "].position", lampPositions[i]);
+            if (i == shadowLampIndex)
+            {
+                lightingShader.setVec3("lampLights[" + idx + "].position", shadowLightPos);
+            }
+            else
+            {
+                lightingShader.setVec3("lampLights[" + idx + "].position", lampPositions[i]);
+            }
+            //lightingShader.setVec3("lampLights[" + idx + "].ambient", 0.002f, 0.006f, 0.005f);
+            lightingShader.setVec3("lampLights[" + idx + "].ambient",0.0f, 0.0f, 0.0f);
             lightingShader.setVec3("lampLights[" + idx + "].diffuse", 0.08f, 0.22f, 0.18f);
             lightingShader.setVec3("lampLights[" + idx + "].specular", 0.02f, 0.06f, 0.05f);
 
@@ -1148,4 +1368,58 @@ glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos)
     float z = playerPos.z + sin(angle) * distance;
 
     return glm::vec3(x, playerPos.y, z);  // 위치 반환
+}
+
+void BuildCollisionShadowBlockers()
+{
+    vector<glm::vec3> vertices;
+
+    for (const Triangle& tri : collisionTriangles)
+    {
+        // 너무 수평인 바닥/천장은 빛 차단용에서 빼고 싶으면 아래 조건 사용
+        // 벽만 쓰려면 이 조건 유지
+        //if (fabs(tri.normal.y) > 0.15f)
+        //    continue;
+
+        vertices.push_back(tri.a);
+        vertices.push_back(tri.b);
+        vertices.push_back(tri.c);
+    }
+
+    collisionShadowVertexCount = (int)vertices.size();
+
+    glGenVertexArrays(1, &collisionShadowVAO);
+    glGenBuffers(1, &collisionShadowVBO);
+
+    glBindVertexArray(collisionShadowVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, collisionShadowVBO);
+    glBufferData(
+        GL_ARRAY_BUFFER,
+        vertices.size() * sizeof(glm::vec3),
+        vertices.data(),
+        GL_STATIC_DRAW
+    );
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(
+        0,
+        3,
+        GL_FLOAT,
+        GL_FALSE,
+        sizeof(glm::vec3),
+        (void*)0
+    );
+
+    glBindVertexArray(0);
+}
+
+void DrawCollisionShadowBlockers()
+{
+    if (collisionShadowVAO == 0 || collisionShadowVertexCount == 0)
+        return;
+
+    glBindVertexArray(collisionShadowVAO);
+    glDrawArrays(GL_TRIANGLES, 0, collisionShadowVertexCount);
+    glBindVertexArray(0);
 }

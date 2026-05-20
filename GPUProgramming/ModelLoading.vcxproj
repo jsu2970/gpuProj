@@ -23,6 +23,9 @@
     <ClCompile Include="src\model_loading.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="point_shadow_depth.fs" />
+    <None Include="point_shadow_depth.gs" />
+    <None Include="point_shadow_depth.vs" />
     <None Include="shader\5.4.light_casters.fs" />
     <None Include="shader\5.4.light_casters.vs" />
     <None Include="shader\screen.fs" />

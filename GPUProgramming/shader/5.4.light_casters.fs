@@ -5,6 +5,12 @@ uniform float shininess;
 uniform sampler2D texture_diffuse1;
 uniform sampler2D texture_specular1;
 
+// 그림자를 그리기 위한 변수
+uniform samplerCube depthMap;
+uniform float far_plane;
+uniform vec3 shadowLightPos;
+uniform int shadowLampIndex;
+
 // 손전등 계산을 위한 구조체
 struct Light {
     vec3 position;  
@@ -48,6 +54,46 @@ uniform bool isEmissive;  // 발광 여부
 uniform vec3 fogColor;    
 uniform float fogDensity;
 
+// 현재 픽셀이 그림자인지 계산하는 함수 (PCF 적용)
+float ShadowCalculation(vec3 fragPos)
+{
+    vec3 fragToLight = fragPos - shadowLightPos;  // 전등 -> 픽셀 방향 벡터
+    float currentDepth = length(fragToLight);  // 실제 거리 계산
+
+    float shadow = 0.0;  // 몇 개 샘플이 그림자인지 세는 변수
+    float bias = 0.001;  // shadow acne 방지 (자기 자신을 그림자로 판단하는 문제)
+
+    // PCF 샘플 방향들
+    vec3 sampleOffsetDirections[20] = vec3[]
+    (
+        vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1),
+        vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+        vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+        vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+        vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0,  1, -1), vec3( 0, -1, -1)
+    );
+
+    int samples = 20;  // 주변 방향 20개 검사
+
+    // 카메라와 현재픽셀의 거리로, 카메라가 멀수록 그림자 경계를 조금 더 넓게 샘플링 (부드러워짐)
+    float viewDistance = length(viewPos - fragPos); 
+    float diskRadius = (1.0 + (viewDistance / far_plane)) / 80.0;
+
+    for (int i = 0; i < samples; i++)
+    {
+        // 현재 방향의 쉐도우 맵 깊이를 가져옴
+        float closestDepth = texture(depthMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+        closestDepth *= far_plane;  // 정규화된 depth를 실제 거리로 복원함
+
+        if (currentDepth - bias > closestDepth)  // 그림자를 판정함. 쉐도우 맵의 가장 가까운 벽보다 멀면 중간에 벽이 있으므로 그림자 판정
+            shadow += 1.0;
+    }
+
+    shadow /= float(samples);  // 그림자 비율을 평균냄 (밝기가 달라짐)
+
+    return shadow;  
+}
+
 void main()
 {
     // ======================
@@ -89,7 +135,7 @@ void main()
     // ======================
     // 전등 point light 계산
     // ======================
-
+    
     for (int i = 0; i < lampLightCount; i++)
     {
         vec3 lampDir = normalize(lampLights[i].position - FragPos);  
@@ -102,6 +148,27 @@ void main()
         float lampAttenuation = 1.0 / (lampLights[i].constant + lampLights[i].linear * lampDistance + lampLights[i].quadratic * lampDistance * lampDistance);
         lampDiffuse *= lampAttenuation;
 
+        // 가까운 전등 1개에만 cube shadow 적용
+        if (i == shadowLampIndex)
+        {
+            float shadow = ShadowCalculation(FragPos);
+
+            //lampDiffuse *= (1.0 - shadow);
+
+            vec3 fragToLight = FragPos - shadowLightPos;
+
+            float rawDepth = texture(depthMap, fragToLight).r;
+            float closestDepth = rawDepth * far_plane;
+            float currentDepth = length(fragToLight);
+
+            if (rawDepth > 0.99)
+                lampDiffuse = vec3(1.0, 0.0, 1.0); // depth 없음
+           else if (currentDepth > closestDepth)
+                lampDiffuse = vec3(1.0, 0.0, 0.0); // 그림자 가능
+            else
+                lampDiffuse = vec3(0.0, 0.0, 1.0); // current가 더 가까움
+        }
+
         result += lampDiffuse;
     }
 
@@ -111,7 +178,7 @@ void main()
         //result += emissionColor * 3.0;
 
         vec3 eerieColor = vec3(0.25, 1.0, 0.75);
-        result += eerieColor * 0.6;
+        //result += eerieColor * 0.6;
     }
 
     // ======================
@@ -127,9 +194,7 @@ void main()
 
     // 최종 결과물과 안개 색상을 혼합
     // fogFactor가 1에 가까우면 원래 색상, 0에 가까우면 안개 색상이 보임
-    result = mix(fogColor, result, fogFactor);
+    //result = mix(fogColor, result, fogFactor);
 
     FragColor = vec4(result, 1.0);
-    //FragColor = texture(texture_diffuse1, TexCoords);
-
 } 
