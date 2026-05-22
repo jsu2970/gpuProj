@@ -188,4 +188,5 @@ void main()
     result = mix(fogColor, result, fogFactor);
 
     FragColor = vec4(result, 1.0);
+    //FragColor = texture(texture_diffuse1, TexCoords);
 } 

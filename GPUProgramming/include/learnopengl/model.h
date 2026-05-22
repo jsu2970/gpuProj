@@ -65,6 +65,12 @@ public:
         loadModel(path);
     }
 
+    // 특정 material index만 로드 ex) Model lampModel("lamp.gltf", 2);
+    Model(string const& path, int targetMaterialIndex, bool gamma = false) : gammaCorrection(gamma)
+    {
+        loadModelOnlyMaterial(path, targetMaterialIndex);
+    }
+
     // draws the model. 하지만 기존과 다르게 mesh들을 돌면서 그리는 것이 아니라 node를 돌면서 그림
     void Draw(Shader &shader, glm::mat4 modelMatrix = glm::mat4(1.0f))
     {
@@ -325,6 +331,86 @@ private:
         }
     }
 
+    // 특정 material index를 사용하는 mesh만 로드하는 함수
+    void loadModelOnlyMaterial(string const& path, int targetMaterialIndex)
+    {
+        // assimp importer 생성
+        Assimp::Importer importer;
+
+        // gltf 파일 로드
+        const aiScene* scene = importer.ReadFile(
+            path,
+            aiProcess_Triangulate |
+            aiProcess_GenSmoothNormals |
+            aiProcess_CalcTangentSpace
+        );
+
+        // 로드 실패 검사
+        if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+        {
+            cout << "ERROR::ASSIMP:: "
+                << importer.GetErrorString() << endl;
+            return;
+        }
+
+        // 텍스처 경로용 디렉토리 저장
+        directory = path.substr(0, path.find_last_of('/'));
+
+        // material 정보 로드
+        loadMaterials(scene);
+
+        /*
+            기존 mesh index -> 새 mesh index 변환용 map
+
+            예:
+            원본 gltf mesh 번호:
+            0 1 2 3 4 5
+
+            material 2만 로드 후:
+            meshes 벡터엔
+            1, 4만 들어갈 수도 있음
+
+            그럼 node가 기존 번호를 참조하면 깨지므로
+            새 번호로 변환해야 함
+        */
+        map<unsigned int, unsigned int> meshIndexMap;
+
+        // 모든 mesh 검사
+        for (unsigned int i = 0; i < scene->mNumMeshes; i++)
+        {
+            aiMesh* aiMesh = scene->mMeshes[i];
+
+            // 원하는 material이 아니면 스킵
+            if ((int)aiMesh->mMaterialIndex != targetMaterialIndex)
+                continue;
+
+            // 현재 meshes 배열에 들어갈 새 index
+            unsigned int newIndex = meshes.size();
+
+            // 실제 mesh 생성
+            meshes.push_back(processMesh(aiMesh, scene));
+
+            // 원본 번호 -> 새 번호 저장
+            meshIndexMap[i] = newIndex;
+        }
+
+        /*
+            node들도 새 mesh 번호를 사용하도록 처리
+
+            기존 processNode는
+            "모든 mesh가 존재한다" 가정이라
+            일부만 로드하면 index가 깨짐
+        */
+        processNodeOnlyLoadedMeshes(scene->mRootNode, scene, glm::mat4(1.0f), meshIndexMap);
+
+        cout << "--- Only Material Model Loaded ---" << endl;
+        cout << "Target Material Index: "
+            << targetMaterialIndex << endl;
+
+        cout << "Loaded Mesh Count: "
+            << meshes.size() << endl;
+    }
+
     // material 정보들을 저장하는 함수이다.
     void loadMaterials(const aiScene* scene)
     {
@@ -381,6 +467,60 @@ private:
             processNode(node->mChildren[i], scene, totalTrans);
         }
 
+    }
+
+    // 일부 mesh만 로드했을 때 사용하는 node 처리 함수
+    void processNodeOnlyLoadedMeshes(aiNode* node, const aiScene* scene, glm::mat4 parentTrans, map<unsigned int, unsigned int>& meshIndexMap) {
+        // assimp 행렬 -> glm 행렬 변환
+        glm::mat4 nodeTrans = convertToGlmMatrix(node->mTransformation);
+
+        // 부모 transform까지 누적
+        glm::mat4 totalTrans = parentTrans * nodeTrans;
+
+        // 현재 node 생성
+        ModelNode modelNode;
+
+        modelNode.name = node->mName.C_Str();
+
+        modelNode.transform = totalTrans;
+
+        // node가 가진 mesh들 검사
+        for (unsigned int i = 0; i < node->mNumMeshes; i++) {
+            // gltf 원본 mesh 번호
+            unsigned int oldMeshIndex =
+                node->mMeshes[i];
+
+            /*
+                우리가 실제로 로드한 mesh인지 확인
+
+                material 조건에 안맞은 mesh는
+                meshIndexMap에 없음
+            */
+            if (meshIndexMap.find(oldMeshIndex) == meshIndexMap.end()) {
+                continue;
+            }
+
+            // 새 mesh 번호 가져오기
+            unsigned int newMeshIndex = meshIndexMap[oldMeshIndex];
+
+            // node에 추가
+            modelNode.meshIndices.push_back(newMeshIndex);
+        }
+
+        // 실제 mesh가 하나라도 있을 때만 저장
+        if (!modelNode.meshIndices.empty()) {
+            nodes.push_back(modelNode);
+        }
+
+        // 자식 node 재귀 처리
+        for (unsigned int i = 0; i < node->mNumChildren; i++) {
+            processNodeOnlyLoadedMeshes(
+                node->mChildren[i],
+                scene,
+                totalTrans,
+                meshIndexMap
+            );
+        }
     }
 
     // 행 우선 행렬을 열 우선 행렬로 변환하는 함수 (mat4에만 대응)
@@ -543,10 +683,21 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
         GLenum format;
         if (nrComponents == 1)
             format = GL_RED;
+        else if (nrComponents == 2)
+            format = GL_RG;
         else if (nrComponents == 3)
             format = GL_RGB;
         else if (nrComponents == 4)
             format = GL_RGBA;
+        else
+        {
+            std::cout << "Unknown texture component count: "
+                << nrComponents << " path: "
+                << filename << std::endl;
+
+            stbi_image_free(data);
+            return 0;
+        }
 
         glBindTexture(GL_TEXTURE_2D, textureID);
         glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
