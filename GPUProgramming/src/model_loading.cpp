@@ -125,8 +125,15 @@ Sound heartBeatSound;
 vector<Sound> electronicSounds;  // 전등 여러 개의 지지직 소리
 Sound metalClangSound;
 Sound flashLightSound;
+Sound landSound;  // 착지 소리
 
-//  metal clang 랜덤 재생
+// 착지 판정용
+bool wasGrounded = true;
+float fallStartY = 0.0f;
+bool jumpStarted = false;      // 스페이스바 점프 착지음용
+bool realFallStarted = false;  // 높은 곳 낙하 착지음용
+
+// metal clang 랜덤 재생
 float clangTimer = 0.0f;              // metal clang 타이머
 float nextClangTime = 20.0f;          // 시작 후 첫 소리는 20초 뒤
 bool firstClangPlayed = false;        // 첫 clang 여부
@@ -403,6 +410,7 @@ int main()
         alSourcef(metalClangSound.source, AL_ROLLOFF_FACTOR, 1.0f);
 
         flashLightSound = CreateSound("resources/sounds/flash_light.wav", 0.40f, false, glm::vec3(0.0f), false);
+        landSound = CreateSound("resources/sounds/jump_land.wav", 0.45f, false, glm::vec3(0.0f), false);
 
         bgmSound = CreateSound("resources/sounds/bgm.wav", 0.08f, true, glm::vec3(0.0f), false);  // 반복 재생 사운드는 초기화 직후 재생
         alSourcePlay(bgmSound.source);
@@ -842,6 +850,10 @@ void processInput(GLFWwindow *window)
 
         // 위 방향으로 속도를 즉시 부여
         verticalVelocity = jumpHeight;
+        
+        // 점프 소리
+        jumpStarted = true;
+        realFallStarted = false;
 
         // 점프를 시작하면 더 이상 바닥 상태가 아님
         isGrounded = false;
@@ -866,6 +878,23 @@ void processInput(GLFWwindow *window)
         if (nextFeetY <= ground)  // 다음 발 위치가 바닥보다 아래로 내려가려 한다면 착지 처리함
         {
             camera.Position.y = ground + eyeHeight;  // 내려왔다면 유저가 서 있어야 할 눈 높이를 카메라 y축에 넣음
+
+            float fallDistance = fallStartY - camera.Position.y;
+
+            // 착지 사운드 재생
+            if (!wasGrounded && soundEnabled && landSound.source != 0 && (jumpStarted || (realFallStarted && fallDistance > 0.25f)))  // 점프했거나, 떨어지는 거리가 긴 경우 소리를 냄
+            {
+                float volume = glm::clamp(fallDistance / 3.0f, 0.3f, 1.0f);
+
+                alSourcef(landSound.source, AL_GAIN, volume);
+
+                alSourceStop(landSound.source);
+                alSourcePlay(landSound.source);
+            }
+            // 땅에 있는 상태로 변경
+            jumpStarted = false;
+            realFallStarted = false;
+
             verticalVelocity = 0.0f;  // 떨어지는 속도를 0으로 함
             isGrounded = true;
         }
@@ -873,6 +902,13 @@ void processInput(GLFWwindow *window)
         {
             camera.Position.y = nextCameraY;  // 현재 카메라 위치에 y축 값을 넣음
             isGrounded = false;
+
+            // 점프가 아닌 상태로 충분히 아래로 떨어지면 실제 낙하로 인정
+            float currentFallDistance = fallStartY - camera.Position.y;
+            if (!jumpStarted && currentFallDistance > 0.25f)
+            {
+                realFallStarted = true;
+            }
         }
     }
     else  // 유효한 바닥을 찾지 못한 경우 (맵 밖으로 떨어진 경우)
@@ -880,6 +916,12 @@ void processInput(GLFWwindow *window)
         verticalVelocity += gravity * deltaTime;  // 속도가 점점 아래 방향으로 증가
         camera.Position.y += verticalVelocity * deltaTime;  // 실제로 아래로 이동
         isGrounded = false;
+    }
+
+    // 이번 프레임 중력 처리 결과로 처음 공중이 된 순간
+    if (!isGrounded && wasGrounded)
+    {
+        fallStartY = oldPos.y;
     }
 
     // 이동 중이면 일정 간격마다 발자국 소리 재생
@@ -891,7 +933,7 @@ void processInput(GLFWwindow *window)
 
         bool moved = movedDistance > 0.001f;  // 이동 거리가 거의 없는 경우 발자국 소리를 내지 않음
 
-        if (moved && isGrounded)  // 공중에 떠있으면 소리가 나지 않음
+        if (moved && (isGrounded || realFallStarted == false))  // 공중에 떠있으면 소리가 나지 않음
         {
             footstepTimer += deltaTime;
 
@@ -954,6 +996,9 @@ void processInput(GLFWwindow *window)
     {
         fKeyPressed = false;
     }
+
+    // 다음 프레임 비교용
+    wasGrounded = isGrounded;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -1207,6 +1252,7 @@ void ShutdownOpenAL()
     DeleteSound(heartBeatSound);
     DeleteSound(metalClangSound);
     DeleteSound(flashLightSound);
+    DeleteSound(landSound);
     // 여러 발소리 사운드 삭제
     for (Sound& s : footstepSounds)
     {
