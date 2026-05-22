@@ -30,6 +30,8 @@
     <None Include="shader\point_shadow_depth.vs" />
     <None Include="shader\screen.fs" />
     <None Include="shader\screen.vs" />
+    <None Include="shader\wobble.fs" />
+    <None Include="shader\wobble.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\learnopengl\camera.h" />

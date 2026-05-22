@@ -26,8 +26,26 @@
 #define DR_WAV_IMPLEMENTATION
 #include <AL/dr_wav.h>
 
-struct TriggerZone;
+/*
+    특정 좌표를 지나면 post-processing 효과, 유령 이벤트 발생을 위해 해당 좌표를 영역으로 저장하는 구조체임
+
+    minX ---------------- maxX
+      |                      |
+      |       문 영역        |
+      |                      |
+    minZ ---------------- maxZ
+*/
+struct TriggerZone {
+    float minX;
+    float maxX;
+    float minY;
+    float maxY;
+    float minZ;
+    float maxZ;
+};
+
 struct Sound;
+struct GhostEvent;
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -45,6 +63,9 @@ void ShutdownOpenAL();
 ALuint LoadWav(const char* filename);
 Sound CreateSound(const char* filePath, float volume, bool loop, glm::vec3 position, bool is3D);
 glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos);
+void UpdateGhostEvent(GhostEvent& ghost, glm::vec3 prevPlayerPos, glm::vec3 playerPos, char axis, float line, float deltaTime);
+void RenderGhostEvent(GhostEvent& ghost, Shader& shader, Model& ghostModel);
+glm::vec3 FixGhostPos(glm::vec3 pos);
 
 // settings
 const unsigned int SCR_WIDTH = 1600;
@@ -80,23 +101,27 @@ float playerRadius = 0.2f;  // 몸통 반지름
 float stepHeight = 0.2f;   // 올라갈 수 있는 최대 높이
 float fallHeight = 1.0f;   // 아래로 찾을 최대 깊이
 
-/* 
-    특정 좌표를 지나면 post - processing 효과를 주기 위해 해당 좌표를 영역으로 저장하는 구조체임
+struct GhostEvent
+{
+    TriggerZone trigger;
 
-    minX ---------------- maxX
-      |                      |
-      |       문 영역        |
-      |                      |
-    minZ ---------------- maxZ
-*/
-struct TriggerZone {
-    float minX;
-    float maxX;
-    float minY;
-    float maxY;
-    float minZ;
-    float maxZ;
+    glm::vec3 startPos;
+    glm::vec3 endPos;
+
+    bool active = false;
+    bool finished = false;
+
+    float moveT = 0.0f;
+    float speed = 0.45f;
 };
+
+// 선을 밟고 지나가는 유령 이벤트
+GhostEvent ghostFarOutside;
+GhostEvent ghostWineStorage;
+GhostEvent ghostHostageRoad;
+
+// 인질 집 안 고정 유령
+GhostEvent hostageHouseGhost;
 
 // OpenAL에서 사용할 사운드 하나를 buffer + source로 묶는 구조체
 struct Sound
@@ -205,6 +230,9 @@ int main()
         "shader/point_shadow_depth.fs"
     );
 
+    // 일렁이는 물체를 그리기 위한 쉐이더
+    Shader wobbleShader("shader/wobble.vs", "shader/wobble.fs");
+
     // ===============================
     // Point Light Shadow Cubemap 생성
     // ===============================
@@ -266,6 +294,8 @@ int main()
     collisionTriangles = ourModel.GetCollisionTriangles(mapMatrix);  // 충돌 삼각형들을 모두 계산함
     cout << "collision tris: " << collisionTriangles.size() << endl;
 
+    Model something("resources/there_is_something/scene.gltf", 2);  // 움직이는 물체 로드 (2번 메테리얼만 로드)
+
     Model flashlightModel("resources/flash_light/scene.gltf");  // 손전등 로드
 
     // post-processing위해 유저가 지나갔을 때 트리거가 발동할 공간의 margin값
@@ -322,6 +352,54 @@ int main()
 
     // 유저의 이전 위치를 저장하는 변수
     glm::vec3 prevPlayerPos = camera.Position;
+
+    // ===============================
+    // 유령 이벤트 좌표 설정
+    // ===============================
+
+    // 1. 머나먼곳 바깥
+    // 첫 번째 좌표: 밟는 선
+    // 두 번째 좌표: 유령 시작 위치
+    // 세 번째 좌표: 유령 이동 목표 위치
+    ghostFarOutside.trigger = {  // 트리거되는 영역을 만듦
+        -11.1636f - marginXZ, -11.1636f + marginXZ,
+        -2.1f - marginY,  -2.1f + marginY,
+         1.22582f - marginXZ, 1.22582f + marginXZ
+    };
+    // 유령이 이동하는 좌표
+    ghostFarOutside.startPos = FixGhostPos(glm::vec3(-11.6769f, -0.5f, -11.1092f));
+    ghostFarOutside.endPos = FixGhostPos(glm::vec3(-10.3508f, -0.42f, -11.127f));
+    ghostFarOutside.speed = 1.0f;
+
+    // 2. 와인창고 안
+    ghostWineStorage.trigger = {
+        -10.3399f - marginXZ, -10.3399f + marginXZ,
+        -2.02f - marginY,  -2.02f + marginY,
+        -18.5095f - marginXZ, -18.5095f + marginXZ
+    };
+    ghostWineStorage.startPos = FixGhostPos(glm::vec3(-3.30236f, -2.02f, -23.6281f));
+    ghostWineStorage.endPos = FixGhostPos(glm::vec3(-3.2292f, -2.02f, -17.8712f));
+    ghostWineStorage.speed = 0.7f;
+
+    // 3. 인질집 가는 길
+    ghostHostageRoad.trigger = {
+         7.93203f - marginXZ,  7.93203f + marginXZ,
+        -1.46f - marginY,     -1.46f + marginY,
+        -8.72986f - marginXZ, -8.72986f + marginXZ
+    };
+    ghostHostageRoad.startPos = FixGhostPos(glm::vec3(7.0576f, 0.78f, -20.4068f));
+    ghostHostageRoad.endPos = FixGhostPos(glm::vec3(6.0635f, 0.78f, -20.4007f));
+    ghostHostageRoad.speed = 1.0f;
+
+    // 4. 인질 집 안
+    // 이건 선 넘기 판정 없이 영역 밟으면 바로 고정 유령 생성
+    hostageHouseGhost.trigger = {
+         5.67541f - marginXZ,  5.67541f + marginXZ,
+         0.78f - marginY,   0.78f + marginY,
+        -23.3189f - marginXZ, -23.3189f + marginXZ
+    };
+    hostageHouseGhost.startPos = FixGhostPos(glm::vec3(-2.27924f, -0.5f, -17.424f));
+    hostageHouseGhost.endPos = hostageHouseGhost.startPos; // 안 움직임
 
     // post-processing을 위한 기본 처리들
     float horrorAmount = 0.0f;  // 호러 필터를 천천히 씌우기 위한 변수 (0.0f: 필터 없음, 1.0f: 필터 100% 적용)
@@ -704,8 +782,119 @@ int main()
         flashlightModel.Draw(lightingShader, flashModel);
         glEnable(GL_DEPTH_TEST);
 
-        // 카메라에 post-processing 효과를 넣음. 유저가 특정 영역을 지나는지 검사
+        // 현재 위치를 저장하여 이전 위치와 비교해 post-processing, 유령 이벤트 효과를 냄
         glm::vec3 playerPos = camera.Position;
+
+        // 유령 쉐이더
+        wobbleShader.use();
+        wobbleShader.setMat4("projection", projection);
+        wobbleShader.setMat4("view", view);
+        wobbleShader.setFloat("time", glfwGetTime());
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glDisable(GL_CULL_FACE);
+
+        glm::mat4 partialModelMatrix = glm::mat4(1.0f);
+
+        partialModelMatrix = glm::translate(
+            partialModelMatrix,
+            glm::vec3(-7.0f, -2.9f, 21.0f)
+        );
+
+        //partialModelMatrix = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+
+        partialModelMatrix = glm::scale(
+            partialModelMatrix,
+            glm::vec3(0.47f)
+        );
+
+        //something.Draw(wobbleShader, partialModelMatrix);
+
+        // ===============================
+        // 유령 이벤트 업데이트
+        // ===============================
+
+        // 머나먼곳 바깥
+        // x축 기준으로 -11.1636f 선을 넘었는지 검사
+        UpdateGhostEvent(
+            ghostFarOutside,
+            prevPlayerPos,
+            playerPos,
+            'x',
+            -11.1636f,
+            deltaTime
+        );
+
+        // 와인창고 안
+        // z축 기준으로 -18.5095f 선을 넘었는지 검사
+        UpdateGhostEvent(
+            ghostWineStorage,
+            prevPlayerPos,
+            playerPos,
+            'z',
+            -18.5095f,
+            deltaTime
+        );
+
+        // 인질집 가는 길
+        // z축 기준으로 -8.72986f 선을 넘었는지 검사
+        UpdateGhostEvent(
+            ghostHostageRoad,
+            prevPlayerPos,
+            playerPos,
+            'z',
+            -8.72986f,
+            deltaTime
+        );
+
+        // 인질 집 안 고정 유령
+        // 선 넘기 판정 없이 영역 안에 들어오면 바로 활성화
+        if (!hostageHouseGhost.finished) {
+            bool inside = IsInsideZone(playerPos, hostageHouseGhost.trigger);
+
+            if (inside) {
+                hostageHouseGhost.active = true;
+            }
+            else if (hostageHouseGhost.active) {
+                // 한 번 보였는데 영역 밖으로 나가면 종료
+                hostageHouseGhost.active = false;
+                hostageHouseGhost.finished = true;
+            }
+        }
+        
+        RenderGhostEvent(ghostFarOutside, wobbleShader, something);
+        RenderGhostEvent(ghostWineStorage, wobbleShader, something);
+        RenderGhostEvent(ghostHostageRoad, wobbleShader, something);
+        RenderGhostEvent(hostageHouseGhost, wobbleShader, something);  // 고정 유령
+        
+        // 머나먼 곳 종료 조건
+        if (ghostFarOutside.active && ghostFarOutside.moveT >= 1.0f)
+        {
+            ghostFarOutside.active = false;
+            ghostFarOutside.finished = true;
+        }
+
+        // 와인 창고 종료 조건
+        if (ghostWineStorage.active && ghostWineStorage.moveT >= 1.0f)
+        {
+            ghostWineStorage.active = false;
+            ghostWineStorage.finished = true;
+        }
+
+        // 인질 집 가는 길 종료 조건
+        if (ghostHostageRoad.active && ghostHostageRoad.moveT >= 1.0f)
+        {
+            ghostHostageRoad.active = false;
+            ghostHostageRoad.finished = true;
+        }
+
+        // 유령 이벤트 종료시 기존으로 돌아감
+        glEnable(GL_CULL_FACE);
+        glDisable(GL_BLEND);
+
+        // 카메라에 post-processing 효과를 넣음. 유저가 특정 영역을 지나는지 검사
 
         // 1번 건물 A문: z가 작아지면 안쪽
         if (NearDoorCrossed(prevPlayerPos, playerPos, door1A, 'z', -12.0614f))
@@ -1389,4 +1578,72 @@ glm::vec3 GetRandomSoundPositionAroundPlayer(glm::vec3 playerPos)
     float z = playerPos.z + sin(angle) * distance;
 
     return glm::vec3(x, playerPos.y, z);  // 위치 반환
+}
+
+// 유령 이벤트 업데이트 함수
+void UpdateGhostEvent(GhostEvent& ghost, glm::vec3 prevPlayerPos, glm::vec3 playerPos, char axis, float line, float deltaTime) {
+    // 이미 한 번 끝난 이벤트면 다시 실행하지 않음
+    if (ghost.finished)
+        return;
+
+    // 아직 유령이 나오지 않은 상태라면 기존 post-processing 문 판정처럼 트리거 영역 근처에서 선을 넘었는지 검사함
+    if (!ghost.active) {
+        if (NearDoorCrossed(prevPlayerPos, playerPos, ghost.trigger, axis, line)) {
+            ghost.active = true;
+            ghost.moveT = 0.0f;
+        }
+    }
+
+    // 유령이 활성화되면 startPos에서 endPos까지 이동
+    if (ghost.active) {
+        ghost.moveT += deltaTime * ghost.speed;
+
+        // moveT가 1.0이면 목표 지점 도착
+        if (ghost.moveT >= 1.0f) {
+            ghost.moveT = 1.0f;
+        }
+    }
+}
+
+// 유령 렌더링 함수
+void RenderGhostEvent(GhostEvent& ghost, Shader& shader, Model& ghostModel) {
+    // 활성화 된 경우에만 그림
+    if (!ghost.active)
+        return;
+
+    // moveT 값에 따라 시작 위치에서 목표 위치까지 부드럽게 이동
+    glm::vec3 currentPos = glm::mix( ghost.startPos, ghost.endPos, ghost.moveT);
+
+    if (&ghost == &ghostWineStorage)
+    {
+        currentPos.x += 1.5f; // 위치 보정
+    }
+
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, currentPos);
+    // 와인창고 유령만 y축 회전
+    if (&ghost == &ghostWineStorage)
+    {
+        model = glm::translate(model, glm::vec3(-0.1f, 0.0f, 0.0f));
+
+        model = glm::rotate(
+            model,
+            glm::radians(90.0f),
+            glm::vec3(0.0f, 1.0f, 0.0f)
+        );
+
+        model = glm::translate(model, glm::vec3(0.1f, 0.0f, 0.0f));
+    }
+
+    model = glm::scale(model, glm::vec3(0.47f));
+
+    ghostModel.Draw(shader, model);
+}
+
+// 유령의 위치가 플레이어 위치와 달라 보정하는 함수
+glm::vec3 FixGhostPos(glm::vec3 pos)
+{
+    pos.y += -1.2f;
+    pos.z += 2.8f;
+    return pos;
 }
