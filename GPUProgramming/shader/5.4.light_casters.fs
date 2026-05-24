@@ -143,12 +143,17 @@ void main()
     {
         vec3 lampDir = normalize(lampLights[i].position - FragPos);  
         float lampDiff = max(dot(norm, lampDir), 0.0); 
+
+        // 전등의 ambient 계산 추가
+        vec3 lampAmbient = lampLights[i].ambient * texture(texture_diffuse1, TexCoords).rgb;
+
         vec3 lampDiffuse = lampLights[i].diffuse * lampDiff * texture(texture_diffuse1, TexCoords).rgb;  // diff값 계산
 
         float lampDistance = length(lampLights[i].position - FragPos);  // 유저로부터의 거리 계산
 
         // 감쇠 계산
         float lampAttenuation = 1.0 / (lampLights[i].constant + lampLights[i].linear * lampDistance + lampLights[i].quadratic * lampDistance * lampDistance);
+        lampAmbient *= lampAttenuation;
         lampDiffuse *= lampAttenuation;
 
         // 가까운 전등 2개에만 cube shadow 적용
@@ -160,7 +165,7 @@ void main()
             }
         }
 
-        result += lampDiffuse;
+        result += (lampAmbient + lampDiffuse);
     }
 
     if (isEmissive)  // 전등 발광 처리

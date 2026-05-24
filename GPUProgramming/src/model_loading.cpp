@@ -369,7 +369,7 @@ int main()
     // 유령이 이동하는 좌표
     ghostFarOutside.startPos = FixGhostPos(glm::vec3(-11.6769f, -0.5f, -11.1092f));
     ghostFarOutside.endPos = FixGhostPos(glm::vec3(-10.3508f, -0.42f, -11.127f));
-    ghostFarOutside.speed = 1.0f;
+    ghostFarOutside.speed = 1.5f;
 
     // 2. 와인창고 안
     ghostWineStorage.trigger = {
@@ -387,9 +387,9 @@ int main()
         -1.46f - marginY,     -1.46f + marginY,
         -8.72986f - marginXZ, -8.72986f + marginXZ
     };
-    ghostHostageRoad.startPos = FixGhostPos(glm::vec3(7.0576f, 0.78f, -20.4068f));
+    ghostHostageRoad.startPos = FixGhostPos(glm::vec3(6.5576f, 0.78f, -20.4068f));
     ghostHostageRoad.endPos = FixGhostPos(glm::vec3(6.0635f, 0.78f, -20.4007f));
-    ghostHostageRoad.speed = 1.0f;
+    ghostHostageRoad.speed = 1.5f;
 
     // 4. 인질 집 안
     // 이건 선 넘기 판정 없이 영역 밟으면 바로 고정 유령 생성
@@ -715,12 +715,12 @@ int main()
         if (flashlightOn)
         {
             lightingShader.setVec3("light.ambient", 0.02f, 0.02f, 0.02f);
-            lightingShader.setVec3("light.diffuse", 0.35f, 0.35f, 0.35f);
-            lightingShader.setVec3("light.specular", 0.15f, 0.15f, 0.15f);
+            lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+            lightingShader.setVec3("light.specular", 0.3f, 0.3f, 0.3f);
         }
         else
         {
-            lightingShader.setVec3("light.ambient", 0.0f, 0.0f, 0.0f);
+            lightingShader.setVec3("light.ambient", 0.02f, 0.02f, 0.02f);
             lightingShader.setVec3("light.diffuse", 0.0f, 0.0f, 0.0f);
             lightingShader.setVec3("light.specular", 0.0f, 0.0f, 0.0f);
         }
