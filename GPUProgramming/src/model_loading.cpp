@@ -715,7 +715,7 @@ int main()
         if (flashlightOn)
         {
             lightingShader.setVec3("light.ambient", 0.02f, 0.02f, 0.02f);
-            lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f);
+            lightingShader.setVec3("light.diffuse", 0.65f, 0.65f, 0.65f);
             lightingShader.setVec3("light.specular", 0.3f, 0.3f, 0.3f);
         }
         else
@@ -747,7 +747,7 @@ int main()
 
             lightingShader.setVec3("lampLights[" + idx + "].position", lampPositions[i]);
             lightingShader.setVec3("lampLights[" + idx + "].ambient", 0.002f, 0.006f, 0.005f);
-            lightingShader.setVec3("lampLights[" + idx + "].diffuse", 0.08f, 0.22f, 0.18f);
+            lightingShader.setVec3("lampLights[" + idx + "].diffuse", 0.12f, 0.30f, 0.24f);
             lightingShader.setVec3("lampLights[" + idx + "].specular", 0.02f, 0.06f, 0.05f);
 
             lightingShader.setFloat("lampLights[" + idx + "].constant", 1.0f);
